@@ -1,0 +1,82 @@
+---
+title: "Micro-project 2025 : MODESTA"
+author: Eliot Boulaire
+date: last-modified
+editor: visual
+toc: true
+format:
+  html: default
+  pdf: default
+---
+
+# Response of migratory fish populations to climate change : an approach based on size-structured demographic models (MODESTA)
+
+Spé/M2 SHA - Option REA\
+2023 - 2024\
+UE MODH - UC : "Quantitative analysis for resources and fisheries modelisation"
+
+## Thesis insight
+
+### General context
+
+Over the past decades, aquatics ecosystems suffer multiple major stress like habitat degradation, overexploitation of wild species or climate change. These stress impacts the population dynamics of species and especially fishes in two major ways ;
+
+-   Variations of abundances
+
+-   Variations of demographic structures (like sex ratio, ages, size, etc.)
+
+These variations can induce a reduction in the capacity of populations to renew and adapt, which is a major concern for resource management.
+
+**In this context, it is essential to understand the mechanisms that shape the response of fish populations to multiple stress factors, and in particular to climate change, in order to produce sound expert reports on the state of populations and to propose measurable management actions.**
+
+However, in order to better understand the dynamics of the demographic structure of populations (and the impact on demographic transitions such as survival, maturation, etc.), we need to better understand these dynamics at the individual level and look at variations in life-history traits (such as individual mortality, size and age at maturation, fecundity, etc.).
+
+### Hypothesis
+
+Within the scope of this project, we focus on the key role of the growth trait which is :
+
+-   An integrating feature of global change (and therefore climate change) which reflects the capacity of individuals to acquire resources from an environment, assimilate them and allocate them to different functions.
+
+-   A life-history trait (LHT) modeled by a lot of trade-off with other major LHT (such as individual mortality or size and age at maturation, etc.)
+
+The main challenge of this project is to integrate these individual level information to a population level, for this purpose we will rely on two conceptual framework :
+
+-   Integral Projection Model (IPM), which are population level models like life-cycle state-space models that take growth into account through an explicit representation of the population size-structure at the different life stages.
+
+-   Integrated Population Models (IPM), which are model that can integrate different types of observation sources (at population and individual level, for example) through a hierarchical framework to assess latent processes (like phases and transitions that can't be observed).
+
+### Case study
+
+This thesis rely on the case of Atlantic salmon (*salmo salar*) which is a
+
+### Objectives
+
+## Micro-Project insight
+
+### Context
+
+### Objectives
+
+The objective of this project is :
+
+1.  To improve the modelling of survival and maturation process that occurs during the marine phase of salmons, between smolts and adults of return (after the first year at sea : 1SW or after 2 years at see : 2SW).
+
+2.  To assess the variability induce by the introduction of a back-calculation model of the corporate size of salmons from the scale size.
+
+3.  To develop a direct link with an estimator of the population state that will help for management decisions (i.e fecundity = egg deposition).
+
+### Resources
+
+#### Data
+
+#### Model
+
+### Guidelines
+
+1.  qzd
+
+2.  qzd
+
+3.  dqz
+
+## References
