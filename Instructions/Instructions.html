@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Eliot Boulaire">
-<meta name="dcterms.date" content="2024-12-06">
+<meta name="dcterms.date" content="2024-12-09">
 
 <title>Micro-project 2025 : MODESTA</title>
 <style>
@@ -47,22 +47,23 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#response-of-migratory-fish-populations-to-climate-change-an-approach-based-on-size-structured-demographic-models-modesta" id="toc-response-of-migratory-fish-populations-to-climate-change-an-approach-based-on-size-structured-demographic-models-modesta" class="nav-link active" data-scroll-target="#response-of-migratory-fish-populations-to-climate-change-an-approach-based-on-size-structured-demographic-models-modesta">Response of migratory fish populations to climate change : an approach based on size-structured demographic models (MODESTA)</a>
+  <li><a href="#size-structured-demographic-models-on-marine-phase-of-atlantic-salmon" id="toc-size-structured-demographic-models-on-marine-phase-of-atlantic-salmon" class="nav-link active" data-scroll-target="#size-structured-demographic-models-on-marine-phase-of-atlantic-salmon">Size-structured demographic models on marine phase of Atlantic salmon</a>
   <ul class="collapse">
-  <li><a href="#thesis-insight" id="toc-thesis-insight" class="nav-link" data-scroll-target="#thesis-insight">Thesis insight</a>
+  <li><a href="#context" id="toc-context" class="nav-link" data-scroll-target="#context">Context</a>
   <ul class="collapse">
-  <li><a href="#general-context" id="toc-general-context" class="nav-link" data-scroll-target="#general-context">General context</a></li>
-  <li><a href="#hypothesis" id="toc-hypothesis" class="nav-link" data-scroll-target="#hypothesis">Hypothesis</a></li>
-  <li><a href="#case-study" id="toc-case-study" class="nav-link" data-scroll-target="#case-study">Case study</a></li>
+  <li><a href="#environnemental-context" id="toc-environnemental-context" class="nav-link" data-scroll-target="#environnemental-context">Environnemental context</a></li>
+  <li><a href="#main-hypothesis" id="toc-main-hypothesis" class="nav-link" data-scroll-target="#main-hypothesis">Main hypothesis</a></li>
+  <li><a href="#modelisation-context" id="toc-modelisation-context" class="nav-link" data-scroll-target="#modelisation-context">Modelisation context</a></li>
+  <li><a href="#micro-project-framework" id="toc-micro-project-framework" class="nav-link" data-scroll-target="#micro-project-framework">Micro-project framework</a></li>
+  </ul></li>
   <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives">Objectives</a></li>
-  </ul></li>
-  <li><a href="#micro-project-insight" id="toc-micro-project-insight" class="nav-link" data-scroll-target="#micro-project-insight">Micro-Project insight</a>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a>
   <ul class="collapse">
-  <li><a href="#context" id="toc-context" class="nav-link" data-scroll-target="#context">Context</a></li>
-  <li><a href="#objectives-1" id="toc-objectives-1" class="nav-link" data-scroll-target="#objectives-1">Objectives</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
-  <li><a href="#guidelines" id="toc-guidelines" class="nav-link" data-scroll-target="#guidelines">Guidelines</a></li>
+  <li><a href="#study-site" id="toc-study-site" class="nav-link" data-scroll-target="#study-site">Study site</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model">Model</a></li>
   </ul></li>
+  <li><a href="#guidelines" id="toc-guidelines" class="nav-link" data-scroll-target="#guidelines">Guidelines</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></li>
   </ul>
@@ -89,7 +90,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 6, 2024</p>
+      <p class="date">December 9, 2024</p>
     </div>
   </div>
   
@@ -101,70 +102,94 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="response-of-migratory-fish-populations-to-climate-change-an-approach-based-on-size-structured-demographic-models-modesta" class="level1">
-<h1>Response of migratory fish populations to climate change : an approach based on size-structured demographic models (MODESTA)</h1>
+<section id="size-structured-demographic-models-on-marine-phase-of-atlantic-salmon" class="level1">
+<h1>Size-structured demographic models on marine phase of Atlantic salmon</h1>
 <p>Spé/M2 SHA - Option REA<br>
 2023 - 2024<br>
 UE MODH - UC : “Quantitative analysis for resources and fisheries modelisation”</p>
-<section id="thesis-insight" class="level2">
-<h2 class="anchored" data-anchor-id="thesis-insight">Thesis insight</h2>
-<section id="general-context" class="level3">
-<h3 class="anchored" data-anchor-id="general-context">General context</h3>
-<p>Over the past decades, aquatics ecosystems suffer multiple major stress like habitat degradation, overexploitation of wild species or climate change. These stress impacts the population dynamics of species and especially fishes in two major ways ;</p>
+<section id="context" class="level2">
+<h2 class="anchored" data-anchor-id="context">Context</h2>
+<section id="environnemental-context" class="level3">
+<h3 class="anchored" data-anchor-id="environnemental-context">Environnemental context</h3>
+<p>Aquatic ecosystems are increasingly impacted by anthropogenic pressures, such as overexploitation, habitat degradation, and climate change. These disturbances significantly affect ecosystem functioning and the sustainability of natural resources (Worm et al., 2006; IPBES, 2019).</p>
+<p>Diadromous fish, such as the Atlantic salmon (Salmo salar), are especially vulnerable due to their reliance on both marine and continental ecosystems. Classified as ‘Near Threatened’ by the IUCN, salmon have faced threats in recent decades linked to changes in the marine ecosystem (recently updated from ‘Least Concern’ to ‘Near Threatened’ in 2023). Salmon populations have experienced substantial declines, particularly due to reduced survival rates of young salmon during the marine phase (Chaput, 2012; ICES, 2017). This decline is accompanied by shifts in life-history traits, such as accelerated maturation (Jonsson et al., 2016; Olmos et al., 2019) and reduced adult size (Todd et al., 2012; Bal et al., 2017; Vollset et al., 2022), leading to lower fecundity (Hanson et al., 2020) and a loss of intra-population diversity, which weakens the ‘portfolio effect’ (Carlson and Satterthwaite, 2011; Schindler et al., 2010). These changes ultimately compromise population resilience, making them more sensitive to environmental pressures and exploitation.</p>
+<p><strong>In this context, gaining a deeper understanding of the mechanisms that drive salmon populations’ responses to global change is crucial. This knowledge will improve our ability to assess their current state and inform the development of effective management strategies.</strong></p>
+</section>
+<section id="main-hypothesis" class="level3">
+<h3 class="anchored" data-anchor-id="main-hypothesis">Main hypothesis</h3>
+<p>The rapid changes observed in the structure and functioning of salmon populations suggest a response to alterations in the ecosystem, particularly a decline in the quantity and quality of trophic resources available during the marine phase of the life cycle (ICES, 2017).</p>
+<p>Available data indicates that growth plays a crucial role in the main demographic transitions throughout the salmon life cycle, influenced by trade-offs specific to each sex.</p>
 <ul>
-<li><p>Variations of abundances</p></li>
-<li><p>Variations of demographic structures (like sex ratio, ages, size, etc.)</p></li>
+<li><p>Growth is a key integrative trait of global change (including climate change) that reflects an individual’s ability to acquire resources from its environment, assimilate them, and allocate them to various functions.</p></li>
+<li><p>Growth is also a life-history trait (LHT) influenced by trade-offs with other major LHTs, such as individual mortality (Friedland et al., 2009) or size and age at maturation (Mobley et al., 2021), among others.</p></li>
 </ul>
-<p>These variations can induce a reduction in the capacity of populations to renew and adapt, which is a major concern for resource management.</p>
-<p><strong>In this context, it is essential to understand the mechanisms that shape the response of fish populations to multiple stress factors, and in particular to climate change, in order to produce sound expert reports on the state of populations and to propose measurable management actions.</strong></p>
-<p>However, in order to better understand the dynamics of the demographic structure of populations (and the impact on demographic transitions such as survival, maturation, etc.), we need to better understand these dynamics at the individual level and look at variations in life-history traits (such as individual mortality, size and age at maturation, fecundity, etc.).</p>
+<p>Specifically, the size of individuals during the smolt migration to the sea increases the probability of survival and successful return (i.e., “bigger is better”: Gregory et al., 2019; Simmons et al., 2021). Additionally, the decision to sexually mature, which determines the return for reproduction, is partly influenced by reaching a size threshold at the end of the first summer at sea, with larger individuals having a greater likelihood of triggering maturation (Mobley et al., 2021; Tréhin et al., 2023). This threshold is typically higher for females, who, on average, have a lower probability of maturing after just one winter at sea compared to males of similar size.</p>
+<p><strong>Given the importance of growth in demographic processes, any change in growth due to environmental variations will have significant impacts on population structure and, ultimately, population dynamics.</strong></p>
 </section>
-<section id="hypothesis" class="level3">
-<h3 class="anchored" data-anchor-id="hypothesis">Hypothesis</h3>
-<p>Within the scope of this project, we focus on the key role of the growth trait which is :</p>
+<section id="modelisation-context" class="level3">
+<h3 class="anchored" data-anchor-id="modelisation-context">Modelisation context</h3>
+<p>However, current population models used for fish stock assessments struggle to explicitly account for the variability of phenotypic traits (such as size) between individuals and/or over time. By neglecting variations in size, these models generate biased estimates of population dynamics, limiting the relevance and accuracy of their projections. In contrast, individual-based models have investigated the influence of growth on the life histories of Atlantic salmon, but their complexity makes them challenging to apply for quantitative assessments based on field data.</p>
+<p><strong>To address this issue, the development of population models structured by life stages and size is essential for improving our understanding of observed variations and enhancing our ability to predict population responses under multiple pressures. The Integral Projection Models (IPMs) approach is proposed as a promising alternative. Positioned between individual-based models and age-structured models in terms of complexity, IPMs offer a more effective framework for incorporating the impacts of growth on population dynamics.</strong></p>
+</section>
+<section id="micro-project-framework" class="level3">
+<h3 class="anchored" data-anchor-id="micro-project-framework">Micro-project framework</h3>
+<p>This micro-project is part of a broader framework of a PhD research aiming to analyze the influence of individual growth variations on the population dynamics of Atlantic salmon. The goal is to improve the tools used to assess their status and propose more robust management measures adapted to environmental pressures. The first step of this project involves characterizing key demographic transitions (survival and maturation) during the marine phase of Atlantic salmon in relation to individual size.</p>
+<p>A major challenge lies in drawing conclusions about the hidden processes of survival and maturation that occur between the smolt stage, during their migration to the sea, and the adult stage, when they return to rivers after their marine phase. To address this challenge, indirect information on individual growth during these hidden stages is obtained through the analysis of archival tissues, such as scales, which allow the reconstruction of individual life histories.</p>
+<p><strong>A model structured by age, stage, sex, and size has been developed to accommodate the complex life cycle of Atlantic salmon</strong>. It was built within an integrated hierarchical statistical modeling framework. This approach is well-suited for combining diverse sources of observations to infer hidden demographic processes (Schaub &amp; Abadi, 2011; Zipkin et al., 2019).</p>
+</section>
+</section>
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<p><u>Current modeling has limitations :</u></p>
+<p>While it accounts for annual data and sex proportions, it does not incorporate these factors into the formalization of size-dependent survival and maturation transitions. <strong>The first objective</strong> is to improve the modeling of survival and maturation processes by integrating annual variations and sex differences, based on existing literature.</p>
+<p>The current model uses indirect size information from scales, assuming an isometric relationship between scale size and body size. However, this assumption appears inconsistent with findings in the literature. <strong>The second objective</strong> is to introduce three back-calculation models for estimating salmon body size from scale size, chosen based on literature, and assess the variability introduced by their application.</p>
+<p>Due to the current reliance on scale size modeling, no direct links with population state indicators used in management could be established. <strong>The final objective</strong> is to leverage the three back-calculation models to develop a direct connection to egg deposition (a proxy for fecundity and population renewal), which will provide valuable insights for management decisions.</p>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<section id="study-site" class="level3">
+<h3 class="anchored" data-anchor-id="study-site">Study site</h3>
+<p>This work is based on long-term monitoring data (24 years of smolt cohorts from 1996 to 2019) of natural salmon populations collected by the <em>Observatoire de Recherche en Environnement petits Fleuves Côtiers</em> (ORE DiaPFC) and the <em>Centre National pour l’Interprétation des Captures de Salmonidés</em> (CNICS). These data are centralized in information systems managed by INRAE.</p>
+<p>Specifically, the data pertain to the Scorff salmon population, a river in the Morbihan region of Brittany. The Scorff drains a 483 km² basin over a 77 km course, joining the Blavet at a common estuary near Lorient. A migration monitoring station has been operational since 1994 at the <em>Moulin des Princes</em> (MdP) site in Pont-Scorff. This station enables the trapping of smolts during downstream migration and adults during upstream migration. Each captured salmon is measured, weighed, and has scales sampled before being released. The collected scales are archived in the ichthyological collection COLISA (<em>Marchand et al., 2021</em>), managed by INRAE and OFB.</p>
+</section>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">Data</h3>
+<p>The data, which has not yet been published, will be shared with you via USB during the first session. Please ensure that the data is deleted after the completion of the course.</p>
+<section id="abundance-estimations" class="level4">
+<h4 class="anchored" data-anchor-id="abundance-estimations">Abundance estimations</h4>
+<p>The counting data collected at the MdP station are imperfect, as some salmon can bypass the trap, particularly during periods of heavy rainfall. To address this, mark-recapture experiments are conducted to estimate:</p>
 <ul>
-<li><p>An integrating feature of global change (and therefore climate change) which reflects the capacity of individuals to acquire resources from an environment, assimilate them and allocate them to different functions.</p></li>
-<li><p>A life-history trait (LHT) modeled by a lot of trade-off with other major LHT (such as individual mortality or size and age at maturation, etc.)</p></li>
+<li><p><strong>Trap efficiency</strong> based on flow conditions,</p></li>
+<li><p><strong>The abundance of migrating smolts</strong> (across all age classes),</p></li>
+<li><p><strong>Adult returns</strong>, categorized into two age classes: 1SW (one-sea-winter) and 2SW (two-sea-winter).</p></li>
 </ul>
+<p>These estimates, derived from 24 years of data, are produced using Bayesian hierarchical models that account for imperfect detection (<em>Buoro et al., 2019</em>).</p>
 </section>
-<section id="case-study" class="level3">
-<h3 class="anchored" data-anchor-id="case-study">Case study</h3>
+<section id="molecular-sexing" class="level4">
+<h4 class="anchored" data-anchor-id="molecular-sexing">Molecular sexing</h4>
+<p>Sexual dimorphism in salmon at the time of trapping (both at the smolt and adult stages) is not pronounced enough to allow reliable sex identification.</p>
+<p>To address this, a sample of 30 scales from 30 different individuals per smolt cohort year and life stage was selected to determine sex using DNA extracted from scale tissues (<em>i.e.</em>, molecular sexing: Besnard et al., 2023). However, reliable sex identification was only possible for a subset of the sample, as DNA extracted from older scales was often too degraded. Additionally, since sexing was not performed after 2018, limited information is available for the most recent cohorts.</p>
+<p>In total, the sex of only … individuals could be identified, with significant temporal variation (see figure).</p>
 </section>
-<section id="objectives" class="level3">
-<h3 class="anchored" data-anchor-id="objectives">Objectives</h3>
-</section>
-</section>
-<section id="micro-project-insight" class="level2">
-<h2 class="anchored" data-anchor-id="micro-project-insight">Micro-Project insight</h2>
-<section id="context" class="level3">
-<h3 class="anchored" data-anchor-id="context">Context</h3>
-</section>
-<section id="objectives-1" class="level3">
-<h3 class="anchored" data-anchor-id="objectives-1">Objectives</h3>
-<p>The objective of this project is :</p>
-<ol type="1">
-<li><p>To improve the modelling of survival and maturation process that occurs during the marine phase of salmons, between smolts and adults of return (after the first year at sea : 1SW or after 2 years at see : 2SW).</p></li>
-<li><p>To assess the variability induce by the introduction of a back-calculation model of the corporate size of salmons from the scale size.</p></li>
-<li><p>To develop a direct link with an estimator of the population state that will help for management decisions (i.e fecundity = egg deposition).</p></li>
-</ol>
-</section>
-<section id="resources" class="level3">
-<h3 class="anchored" data-anchor-id="resources">Resources</h3>
-<section id="data" class="level4">
-<h4 class="anchored" data-anchor-id="data">Data</h4>
-</section>
-<section id="model" class="level4">
-<h4 class="anchored" data-anchor-id="model">Model</h4>
+<section id="scale-size" class="level4">
+<h4 class="anchored" data-anchor-id="scale-size">Scale size</h4>
+<p>The model uses individual data from scale readings to estimate the size structure of the population. A sample of 30 scales from 30 different individuals per smolt cohort year and life stage was selected to determine the growth ring sizes at various audit stages (see figure). Scales are calcified structures that grow alongside the individual, are easy to collect, and have minimal impact on the fish’s life.</p>
+<p>The scales are collected from a “standard zone” (see figure) on the fish’s body, where scales first develop during the fry stage. The scale size from this area is the most strongly correlated with the salmon’s body size (Baglinière et al., 1985; Shearer, 1992).</p>
 </section>
 </section>
-<section id="guidelines" class="level3">
-<h3 class="anchored" data-anchor-id="guidelines">Guidelines</h3>
+<section id="model" class="level3">
+<h3 class="anchored" data-anchor-id="model">Model</h3>
+<p>Le modèle est formulé dans le cadre d’un modèle de population intégré à espace d’état (modèle hiérarchique) bayésien qui permet d’intégrer différentes sources de données (l’abondance, le rapport des sexes et la structure de taille) et les erreurs d’observation associées, afin d’estimer la dynamique de population représentée par des stades et des transitions démographiques latentes, non-directement observables (Figure 2). Ce modèle est composé de 3 stades observées (smolts, 1HM et 2HM) et 4 stades latents (smolts survivants, post-smolts à la maturation, post-smolts maturant et post-smolts non-maturant) (Figure 1 et 2). Ce modèle est également sexé, les abondances dans chaque stade sont représentées séparément pour les mâles et les femelles (indice s). La structure en taille est représentée à chaque stade par k = 52 classes (indice l). Ce niveau de discrétisation offre un bon compromis entre la modélisation des transitions taille-dépendantes sous la forme de taux de transition (taux de survie, taux de maturation) dépendant explicitement de la classe de taille et l’efficacité computationnelle. Le modèle est également structuré en fonction du temps, représenté par l’année de dévalaison des smolts, soit 24 cohortes (indices t). L’abondance et les transitions sont représentées indépendamment pour chaque cohorte. A noter cependant que la croissance entre les stades n’est pas représentée dans ce modèle.&nbsp;</p>
+<p>Pour chaque cohorte t, le premier stade représenté est le stade de smolt migrant (au printemps de l’année t) (Figure 2). Les smolts passent alors un premier été en mer jusqu’à la fin de l’été de l’année t (novembre) durant lequel ils sont soumis à une première transition démographique de survie jusqu’au stade de smolt survivants (Figure 2). Après le premier été en mer, les smolts survivants intègrent tous le stade post-smolts à la maturation, c’est-à-dire des smolts qui réalisent la transition démographique avec une décision de maturation ou non. Ces post-smolts ont des structures de taille différentes du stade précédent, cependant l’étape de croissance entre les smolts survivants et les post-smolts à la maturation n’est pas modélisée. Les post-smolts maturants retourneront dans leur rivière natale comme adultes au stade de retour après 1HM (juillet de l’année t+1), conditionnellement à une survie post-maturation fixe. Les post-smolts non-maturants retourneront au stade adulte de retour après 2HM (mai de l’année t+2) (Figure 2), conditionnellement à une survie post-maturation fixe. Afin de limiter la confusion dans l’estimation statistique des deux taux de transition précédents, la survie post-maturation est considérée connue et ne varie ni en fonction de la taille, ni en fonction du sexe, ni en fonction de la cohorte. Conditionnellement aux taux de transitions précédents, les transitions sont modélisées comme déterministes. Les taux de survie et de maturation sont appliqués de façon multiplicative sur les abondances pour les différents stades (observé ou latent), sexes (s), classes de taille (l) et cohorte (t). Ces deux transitions sont potentiellement dépendantes de la classe de taille, potentiellement différentes entre les mâles et les femelles et différentes entre les cohortes de smolts. L’étape de croissance entre les post-smolts maturants ou non-maturants et les adultes de retour en 1HM ou 2HM n’est pas modélisée.</p>
+</section>
+</section>
+<section id="guidelines" class="level2">
+<h2 class="anchored" data-anchor-id="guidelines">Guidelines</h2>
 <ol type="1">
 <li><p>qzd</p></li>
 <li><p>qzd</p></li>
 <li><p>dqz</p></li>
 </ol>
-</section>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
