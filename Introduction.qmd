@@ -1,0 +1,183 @@
+---
+title: |
+  | Size-structured demographic models on marine phase of Atlantic salmon
+  | Micro-project 2025 : Introduction
+subtitle: |
+  | Specialisation : M2 SHA
+  | Option : REA
+  | Year : 2023 - 2024
+  | UE : MODH
+  | UC : Quantitative analysis for resources and fisheries modelisation
+author: Eliot Boulaire
+date: last-modified
+editor: visual
+lang: en
+format:
+  html:
+    theme: default
+    toc: true
+    toc-title: Contents
+    toc-depth: 2
+    number-sections: true
+    other-links:
+      - text: MODESTA M2
+        icon: file-pdf
+        href: Introduction_files/MODESTA-M2.pdf
+      - text: Bibliography
+        icon: archive
+        href: Biblio/bilbiography.bib
+    code-links:
+      - text: GitHub Project
+        icon: file-code
+        href: https://github.com/eliotboulaire/MicroProject-2025_MODESTA
+      - text: Model
+        icon: file-code
+        href: Project/model/SALMSIZE-MAR.R
+    header-includes: |
+      <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+        <img src="Introduction_files/images/iara-logo.png" alt="IARA Logo" width="300"/>
+        <img src="Introduction_files/images/decod-logo.png" alt="DECOD Logo" width="300"/>
+        <img src="Introduction_files/images/modesta-logo.png" alt="MODESTA Logo" width="300"/>
+      </div>
+  pdf:
+    theme: default
+    toc: true
+    toc-title: Contents
+    toc-depth: 2
+    number-sections: true
+bibliography: Introduction_files/references.bib
+---
+
+# Context
+
+## Environnemental context
+
+Aquatic ecosystems are increasingly impacted by anthropogenic pressures, such as overexploitation, habitat degradation, and climate change. These disturbances significantly affect ecosystem functioning and the sustainability of natural resources [@worm2006; @ipbes2019].
+
+Diadromous fish, such as the Atlantic salmon (*Salmo salar*), are especially vulnerable due to their reliance on both marine and continental ecosystems. Classified as ‘Near Threatened’ by the IUCN, salmon have faced threats in recent decades linked to changes in the marine ecosystem (recently updated from ‘Least Concern’ to ‘Near Threatened’ in 2023). Salmon populations have experienced substantial declines, particularly due to reduced survival rates of young salmon during the marine phase [@chaput2012; @ices2024] @fig-ices. This decline is accompanied by shifts in life-history traits, such as accelerated maturation [@jonsson2016; @olmos2019] and reduced adult size [@todd2012; @bal2017; @vollset2022] @fig-bal, leading to lower fecundity [@hanson2020] and a loss of intra-population diversity, which weakens the 'portfolio effect' [@schindler2010; @carlson2011]. These changes ultimately compromise population resilience, making them more sensitive to environmental pressures and exploitation.
+
+::::: columns
+::: {.column width="50%"}
+![Southern Northeast salmon stock abundance of non-maturing individuals after 1 year at sea (Pre-Fishery Abundance) estimated from 1971 to 2019 (source: [@ices2024]).](Introduction_files/images/ices-figure.png){#fig-ices fig-align="center" width="350"}
+:::
+
+::: {.column width="50%"}
+![Change in total length (LT) in one sea-winter (1SW) and two sea-winter (2SW) Salmo salar from Normandy (. . .), Brittany (- - -) and Aquitaine ( \_\_\_ ) 1997–2013. The shaded bands represent 95% c.i. (source: [@bal2017]).](Introduction_files/images/bal-figure.png){#fig-bal fig-align="center" width="400"}
+:::
+:::::
+
+**In this context, gaining a deeper understanding of the mechanisms that drive salmon populations' responses to global change is crucial. This knowledge will improve our ability to assess their current state and inform the development of effective management strategies.**
+
+## Main hypothesis
+
+The rapid changes observed in the structure and functioning of salmon populations suggest a response to alterations in the ecosystem, particularly a decline in the quantity and quality of trophic resources available during the marine phase of the life cycle [@vollset2022; @ices2024] @fig-lifecycle.
+
+![Atlantic salmon life cycle (source: [@mobley2021])](Introduction_files/images/lifecycle-salmon-figure.png){#fig-lifecycle fig-align="center" width="600"}
+
+Available data indicates that growth plays a crucial role in the main demographic transitions throughout the salmon life cycle, influenced by trade-offs specific to each sex.
+
+-   Growth is a key integrative trait of global change (including climate change) that reflects an individual's ability to acquire resources from its environment, assimilate them, and allocate them to various functions.
+
+-   Growth is also a life-history trait (LHT) influenced by trade-offs with other major LHTs, such as individual mortality [@friedland2009] or size and age at maturation [@mobley2021], among others.
+
+Specifically, the size of individuals during the smolt migration to the sea increases the probability of survival and successful return (*i.e* "bigger is better": [@gregory2019; @simmons2021]). Additionally, the decision to sexually mature, which determines the return for reproduction, is partly influenced by reaching a size threshold at the end of the first summer at sea, with larger individuals having a greater likelihood of triggering maturation [@mobley2021; @tréhin2022]. This threshold is typically higher for females, who, on average, have a lower probability of maturing after just one winter at sea compared to males of similar size.
+
+**Given the importance of growth in demographic processes, any change in growth due to environmental variations will have significant impacts on population structure and, ultimately, population dynamics.**
+
+## Modelisation context
+
+However, current population models used for fish stock assessments struggle to explicitly account for the variability of phenotypic traits (*i.e* size) between individuals and/or over time [@rivot2004; @olmos2019; @tréhin2022]. By neglecting variations in size, these models generate biased estimates of population dynamics, limiting the relevance and accuracy of their projections. In contrast, individual-based models have investigated the influence of growth on the life histories of Atlantic salmon, but their complexity makes them challenging to apply for quantitative assessments based on field data [@piou2013; @phang2016].
+
+**To address this issue, the development of population models structured by life-stages and size is essential for improving our understanding of observed variations and enhancing our ability to predict population responses under multiple pressures. The Integral Projection Models (IPMs) approach is proposed as a promising alternative** [@coulson2012; @stubberud2019]**. Positioned between individual-based models and age-structured models in terms of complexity, IPMs offer a more effective framework for incorporating the impacts of growth on population dynamics** [@plard2019]**.**
+
+## Micro-project framework
+
+This micro-project is part of a broader framework of a PhD research aiming to analyze the influence of individual growth variations on the population dynamics of Atlantic salmon. The goal is to improve the tools used to assess their status and propose more robust management measures adapted to environmental pressures. **The first step of this project involves characterizing key demographic transitions during the marine phase of Atlantic salmon in relation to individual size.**
+
+A major challenge lies in drawing conclusions about the hidden processes that occur during the marine phase. **To address this challenge, indirect information on individual growth during these hidden stages is obtained through the analysis of archival tissues (see @sec-data).**
+
+**A structured model has been developed to accommodate the complex life cycle of Atlantic salmon (see @sec-model).** It was built within an integrated hierarchical statistical modeling framework [@schaub2011; @zipkin2019] in order to combine diverse sources of observations to infer hidden demographic processes.
+
+# Objectives
+
+[The current modeling has limitations :]{.underline}
+
+While it accounts for annual data and sex proportions, it does not incorporate these factors into the formalization of size-dependent survival and maturation transitions. **The first objective** is to improve the modeling of survival and maturation processes by integrating annual variations and sex differences, based on existing literature.
+
+The current model uses indirect size information from scales, assuming an isometric relationship between scale size and body size. However, this assumption appears inconsistent with findings in the literature. **The second objective** is to introduce three back-calculation models for estimating salmon body size from scale size, chosen based on literature, and assess the variability introduced by their application.
+
+Due to the current reliance on scale size modeling, no direct links with population state indicators used in management could be established. **The final objective** is to leverage the three back-calculation models to develop a direct connection to egg deposition (a proxy for fecundity and population renewal), which will provide valuable insights for management decisions.
+
+# Resources
+
+## Study site
+
+**This work is based on long-term monitoring data (24 years of smolt cohorts from 1996 to 2019) of natural salmon populations** collected by the *Observatoire de Recherche en Environnement petits Fleuves Côtiers* (ORE DiaPFC) and the *Centre National pour l’Interprétation des Captures de Salmonidés* (CNICS). These data are centralized in information systems managed by INRAE.
+
+**Specifically, the data pertain to the Scorff salmon population, a river in the Morbihan region of Brittany.** The Scorff drains a 483 km² basin over a 77 km course, joining the Blavet at a common estuary near Lorient @fig-scorff. A migration monitoring station has been operational since 1994 at the *Moulin des Princes* (MdP) site in Pont-Scorff @fig-mdp. This station enables the trapping of smolts during downstream migration and adults during upstream migration. Each captured salmon is measured, weighed, and has scales sampled before being released. The collected scales are archived in the ichthyological collection COLISA [@marchand], managed by INRAE and OFB.
+
+![Distribution of amphihaline migrants in the Scorff catchment in 2012 (Sources: Onema, 2011, Jouanin et al., 2012 - Production: BGM)](Introduction_files/images/scorff-figure.png){#fig-scorff fig-align="center" width="600"}
+
+## Data {#sec-data}
+
+The data, which has not yet been published, will be shared with you via USB during the first session. Please ensure that the data is deleted after the completion of the course.
+
+### Abundance estimations
+
+The counting data collected at the MdP station @fig-mdp are imperfect, as some salmon can bypass the trap, particularly during periods of heavy rainfall. To address this, mark-recapture experiments are conducted to estimate:
+
+-   **Trap efficiency** based on flow conditions,
+
+-   **The abundance of migrating smolts** (across all age classes),
+
+-   **Adult returns**, categorized into two age classes: 1SW (one-sea-winter) and 2SW (two-sea-winter).
+
+These estimates, derived from 24 years of data, are produced using Bayesian hierarchical models that account for imperfect detection [@mathieu2019].
+
+![Moulin des Princes station on the Scorff river (Photo: \@Eliot Boulaire)](Introduction_files/images/mdp-figure.jpg){#fig-mdp fig-align="center" width="400"}
+
+### Molecular sexing
+
+Sexual dimorphism in salmon at the time of trapping (both at the smolt and adult stages) is not pronounced enough to allow reliable sex identification.
+
+To address this, a sample of 30 scales from 30 different individuals per smolt cohort year and life-stage was selected to determine sex using DNA extracted from scale tissues (*i.e.*, molecular sexing: Besnard et al., 2023). However, reliable sex identification was only possible for a subset of the sample, as DNA extracted from older scales was often too degraded. Additionally, since sexing was not performed after 2018, limited information is available for the most recent cohorts.
+
+### Scale size
+
+The model uses individual data from scale readings to indirectly estimate the size structure of the population @fig-scale. Scales are calcified structures that grow alongside the individual and allow the reconstruction of individual life histories. Moreover, they are easy to collect, and have minimal impact on the fish's life (compare to otoliths).
+
+A sample of 30 scales from 30 different individuals per smolt cohort year and life-stage was selected to determine the growth ring sizes at various life-stages [@besnard] @fig-scale. We used adult scales (1SW and 2SW) to assess the size structure of various latent life-stages (*i.e* surviving smolts, post-smolts : see @sec-model) with the main hypothesis that return adults are a sub-sample of each latent life-stages @fig-scale.
+
+![Identification of growth on an adult scale of a salmon that has spent two winters at sea (2HM): Schematic representation of seasonal growth increments (blue= Smolt; purple= Post-smolt; orange= 1SW; green= 2SW). Discovery V8 stereomicroscope (Zeiss) and Infinity 3 optical camera (Lumenera). (Source: [@tréhin2022] - Photo: \@Ludivine Lamireau - Production: \@Eliot Boulaire).](Introduction_files/images/scale-size-figure.png){#fig-scale fig-align="center" width="400"}
+
+The scales are collected from a "standard zone" @fig-stdzone on the fish's body, where scales first develop during the fry stage. The scale size from this area is the most strongly correlated with the salmon's body size [@baglinière1985; @shearer1992].
+
+![Lateral diagram of an Atlantic salmon and the standard scale collection area according to the international recommendations of the ICES report (Source: ICES 1984 - Production: Gueguen and Prouzet 1995).](Introduction_files/images/zone-prelev-figure.png){#fig-stdzone fig-align="center" width="400"}
+
+## Model {#sec-model}
+
+**A model structured by stage, age, sex, and size, with a focus on the marine phase, has been developed to track the population dynamics of Atlantic salmon from smolt migration downstream to the return of adults @fig-model.**
+
+-   During downstream migration in April, smolts experience low survival rates, particularly during the migration itself and the first month at sea. This survival appears to be size-dependent, forming a latent stage of surviving smolts.
+
+-   These surviving smolts grow and reach a post-smolt size by November, at which point they face a maturation decision. This decision, also seemingly influenced by individual size, determines the age of return. A subsequent survival rate—considered fixed and not size-dependent—applies to the period between maturation and return.
+
+-   Over this time, salmon continue to grow and ultimately reach the size of returning adults, categorized as either 1SW or 2SW.
+
+It's important to note that the model currently does not explicitly incorporate growth processes, which is why growth transitions are represented as dashed lines. Instead, the model links abundance across transitions, without directly modeling growth dynamics.
+
+![Schematic representation of the salmon stage-, age-, sex-, size-based life cycle model (boxes= stages, ovals= demographic transitions ; grey fill=latent variables, white fill= observed variables ; blue color= smolt, purple color= post-smolt, orange color= 1SW, green color= 2SW ; normal pictogram= size structure, sex pictogram= sex ratio, salmons pictogram= abundance). (Production: \@Eliot Boulaire).](Introduction_files/images/model-figure.png){#fig-model fig-align="center" width="600"}
+
+The integrated hierarchical framework synthesizes data on abundance, sex ratio, and size structure from both observable and latent stages to infer marine survival and maturity rates. Direct information on abundance, sex ratio, and size structure is available only for observable stages, while latent stages rely on indirect information about size structure.
+
+Given the multiple life-history strategies in the marine environment (e.g., 1SW and 2SW returns), the model’s temporal framework is normalized to the years of smolt cohorts at downstream migration, spanning cohorts from 1996 to 2019.
+
+# Guidelines
+
+1.  A
+
+2.  B
+
+3.  C
+
+# Bibliography
