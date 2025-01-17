@@ -1,6 +1,6 @@
 ---
 title: |
-  | Size-structured demographic models on marine phase of Atlantic salmon
+  | Understanding the response of migratory fish to climate change : Size-structured demographic models on marine phase of Atlantic salmon
   | Micro-project 2025 : Introduction
 subtitle: |
   | M2 : Specialisation & SHA
