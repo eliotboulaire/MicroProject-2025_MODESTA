@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Eliot Boulaire">
-<meta name="dcterms.date" content="2024-12-11">
+<meta name="dcterms.date" content="2025-01-17">
 
-<title>quarto-inputc1a65c12d8836972</title>
+<title>quarto-input69c2884f7e13b012</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -55,6 +55,9 @@ div.csl-indent {
 <script src="Introduction_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Introduction_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Introduction_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="Introduction_files/libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="Introduction_files/libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="Introduction_files/libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 </head><body><div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
   <img src="Introduction_files/images/iara-logo.png" alt="IARA Logo" width="300">
   <img src="Introduction_files/images/decod-logo.png" alt="DECOD Logo" width="300">
@@ -66,7 +69,7 @@ div.csl-indent {
 
 
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
   <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Contents</h2>
@@ -86,27 +89,26 @@ div.csl-indent {
   <li><a href="#sec-data" id="toc-sec-data" class="nav-link" data-scroll-target="#sec-data"><span class="header-section-number">3.2</span> Data</a></li>
   <li><a href="#sec-model" id="toc-sec-model" class="nav-link" data-scroll-target="#sec-model"><span class="header-section-number">3.3</span> Model</a></li>
   </ul></li>
-  <li><a href="#guidelines" id="toc-guidelines" class="nav-link" data-scroll-target="#guidelines"><span class="header-section-number">4</span> Guidelines</a></li>
-  <li><a href="#bibliography" id="toc-bibliography" class="nav-link" data-scroll-target="#bibliography"><span class="header-section-number">5</span> Bibliography</a></li>
+  <li><a href="#bibliography" id="toc-bibliography" class="nav-link" data-scroll-target="#bibliography"><span class="header-section-number">4</span> Bibliography</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Introduction.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div><div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="Introduction_files/MODESTA-M2.pdf"><i class="bi bi-file-pdf"></i>MODESTA M2</a></li><li><a href="Biblio/bilbiography.bib"><i class="bi bi-archive"></i>Bibliography</a></li></ul></div><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://github.com/eliotboulaire/MicroProject-2025_MODESTA"><i class="bi bi-file-code"></i>GitHub Project</a></li><li><a href="Project/model/SALMSIZE-MAR.R"><i class="bi bi-file-code"></i>Model</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Introduction.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="Introduction.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div><div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="Biblio/bilbiography.bib"><i class="bi bi-archive"></i>Bibliography</a></li></ul></div><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://github.com/eliotboulaire/MicroProject-2025_MODESTA"><i class="bi bi-file-code"></i>GitHub Project</a></li><li><a href="Project/model/SALMSIZE-MAR.R"><i class="bi bi-file-code"></i>Model</a></li></ul></div></nav>
 </div>
-<main class="content" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><div class="line-block">Size-structured demographic models on marine phase of Atlantic salmon<br>
 Micro-project 2025 : Introduction</div></h1>
-<p class="subtitle lead"></p><div class="line-block">Specialisation : M2 SHA<br>
-Option : REA<br>
-Year : 2023 - 2024<br>
+<p class="subtitle lead"></p><div class="line-block">M2 : Specialisation &amp; SHA<br>
+Option : ECOLH<br>
+Year : 2024 - 2025<br>
 UE : MODH<br>
 UC : Quantitative analysis for resources and fisheries modelisation</div><p></p>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
@@ -118,7 +120,7 @@ UC : Quantitative analysis for resources and fisheries modelisation</div><p></p>
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 11, 2024</p>
+      <p class="date">January 17, 2025</p>
     </div>
   </div>
   
@@ -135,13 +137,13 @@ UC : Quantitative analysis for resources and fisheries modelisation</div><p></p>
 <section id="environnemental-context" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="environnemental-context"><span class="header-section-number">1.1</span> Environnemental context</h2>
 <p>Aquatic ecosystems are increasingly impacted by anthropogenic pressures, such as overexploitation, habitat degradation, and climate change. These disturbances significantly affect ecosystem functioning and the sustainability of natural resources <span class="citation" data-cites="worm2006 ipbes2019">(<a href="#ref-worm2006" role="doc-biblioref">Worm et al. 2006</a>; <a href="#ref-ipbes2019" role="doc-biblioref">IPBES 2019</a>)</span>.</p>
-<p>Diadromous fish, such as the Atlantic salmon (<em>Salmo salar</em>), are especially vulnerable due to their reliance on both marine and continental ecosystems. Classified as ‘Near Threatened’ by the IUCN, salmon have faced threats in recent decades linked to changes in the marine ecosystem (recently updated from ‘Least Concern’ to ‘Near Threatened’ in 2023). Salmon populations have experienced substantial declines, particularly due to reduced survival rates of young salmon during the marine phase <span class="citation" data-cites="chaput2012 ices2024">(<a href="#ref-chaput2012" role="doc-biblioref">Chaput 2012</a>; <a href="#ref-ices2024" role="doc-biblioref">ICES 2024</a>)</span> <a href="#fig-ices" class="quarto-xref">Figure&nbsp;1</a>. This decline is accompanied by shifts in life-history traits, such as accelerated maturation <span class="citation" data-cites="jonsson2016 olmos2019">(<a href="#ref-jonsson2016" role="doc-biblioref">Jonsson, Jonsson, and Albretsen 2016</a>; <a href="#ref-olmos2019" role="doc-biblioref">Olmos et al. 2019</a>)</span> and reduced adult size <span class="citation" data-cites="todd2012 bal2017 vollset2022">(<a href="#ref-todd2012" role="doc-biblioref">Todd et al. 2012</a>; <a href="#ref-bal2017" role="doc-biblioref">Bal et al. 2017</a>; <a href="#ref-vollset2022" role="doc-biblioref">Vollset et al. 2022</a>)</span> <a href="#fig-bal" class="quarto-xref">Figure&nbsp;2</a>, leading to lower fecundity <span class="citation" data-cites="hanson2020">(<a href="#ref-hanson2020" role="doc-biblioref">Hanson et al. 2020</a>)</span> and a loss of intra-population diversity, which weakens the ‘portfolio effect’ <span class="citation" data-cites="schindler2010 carlson2011">(<a href="#ref-schindler2010" role="doc-biblioref">Schindler et al. 2010</a>; <a href="#ref-carlson2011" role="doc-biblioref">Carlson and Satterthwaite 2011</a>)</span>. These changes ultimately compromise population resilience, making them more sensitive to environmental pressures and exploitation.</p>
+<p>Diadromous fish, such as the Atlantic salmon (<em>Salmo salar</em>), are especially vulnerable due to their reliance on both marine and continental ecosystems. Classified as ‘Near Threatened’ by the IUCN, salmons have faced threats in recent decades linked to alterations in the ecosystems (updated from ‘Least Concern’ to ‘Near Threatened’ in 2023). Salmon populations have experienced substantial declines in abundances during the last decades <span class="citation" data-cites="chaput2012 ices2024">(<a href="#ref-chaput2012" role="doc-biblioref">Chaput 2012</a>; <a href="#ref-ices2024" role="doc-biblioref">ICES 2024</a>)</span> <a href="#fig-ices" class="quarto-xref">Figure&nbsp;1</a>. This decline is accompanied by shifts in life-history traits (LHT), such as early maturation <span class="citation" data-cites="jonsson2016 olmos2019">(<a href="#ref-jonsson2016" role="doc-biblioref">Jonsson, Jonsson, and Albretsen 2016</a>; <a href="#ref-olmos2019" role="doc-biblioref">Olmos et al. 2019</a>)</span> and reduced adult size <span class="citation" data-cites="todd2012 bal2017 vollset2022">(<a href="#ref-todd2012" role="doc-biblioref">Todd et al. 2012</a>; <a href="#ref-bal2017" role="doc-biblioref">Bal et al. 2017</a>; <a href="#ref-vollset2022" role="doc-biblioref">Vollset et al. 2022</a>)</span> <a href="#fig-bal" class="quarto-xref">Figure&nbsp;2</a>, leading to lower fecundity <span class="citation" data-cites="hanson2020">(<a href="#ref-hanson2020" role="doc-biblioref">Hanson et al. 2020</a>)</span> and a loss of intra-population diversity, which weakens the ‘portfolio effect’ <span class="citation" data-cites="schindler2010 carlson2011">(<a href="#ref-schindler2010" role="doc-biblioref">Schindler et al. 2010</a>; <a href="#ref-carlson2011" role="doc-biblioref">Carlson and Satterthwaite 2011</a>)</span>. These changes ultimately compromise population resilience, making them more sensitive to environmental pressures and exploitation.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div id="fig-ices" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<div id="fig-ices" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="Introduction_files/images/ices-figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="350">
+<a href="Introduction_files/images/ices-figure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Southern Northeast salmon stock abundance of non-maturing individuals after 1 year at sea (Pre-Fishery Abundance) estimated from 1971 to 2019 (source: [@ices2024])."><img src="Introduction_files/images/ices-figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Southern Northeast salmon stock abundance of non-maturing individuals after 1 year at sea (Pre-Fishery Abundance) estimated from 1971 to 2019 (source: <span class="citation" data-cites="ices2024">(<a href="#ref-ices2024" role="doc-biblioref">ICES 2024</a>)</span>).
@@ -149,10 +151,10 @@ Figure&nbsp;1: Southern Northeast salmon stock abundance of non-maturing individ
 </figure>
 </div>
 </div><div class="column" style="width:50%;">
-<div id="fig-bal" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<div id="fig-bal" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="Introduction_files/images/bal-figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400">
+<a href="Introduction_files/images/bal-figure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Change in total length (LT) in one sea-winter (1SW) and two sea-winter (2SW) Salmo salar from Normandy (. . .), Brittany (- - -) and Aquitaine ( ___ ) 1997–2013. The shaded bands represent 95% c.i. (source: [@bal2017])."><img src="Introduction_files/images/bal-figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="430"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Change in total length (LT) in one sea-winter (1SW) and two sea-winter (2SW) Salmo salar from Normandy (. . .), Brittany (- - -) and Aquitaine ( ___ ) 1997–2013. The shaded bands represent 95% c.i. (source: <span class="citation" data-cites="bal2017">(<a href="#ref-bal2017" role="doc-biblioref">Bal et al. 2017</a>)</span>).
@@ -165,21 +167,21 @@ Figure&nbsp;2: Change in total length (LT) in one sea-winter (1SW) and two sea-w
 </section>
 <section id="main-hypothesis" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="main-hypothesis"><span class="header-section-number">1.2</span> Main hypothesis</h2>
-<p>The rapid changes observed in the structure and functioning of salmon populations suggest a response to alterations in the ecosystem, particularly a decline in the quantity and quality of trophic resources available during the marine phase of the life cycle <span class="citation" data-cites="vollset2022 ices2024">(<a href="#ref-vollset2022" role="doc-biblioref">Vollset et al. 2022</a>; <a href="#ref-ices2024" role="doc-biblioref">ICES 2024</a>)</span> <a href="#fig-lifecycle" class="quarto-xref">Figure&nbsp;3</a>.</p>
-<div id="fig-lifecycle" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<p>The rapid changes observed in the structure (LHT) and abundance of salmon populations suggest a response to changes in the marine ecosystem <a href="#fig-lifecycle" class="quarto-xref">Figure&nbsp;3</a>. These changes are thought to be due in particular to a reduction in the quantity and quality of trophic resources available during this phase, leading to a reduction in the growth of salmon at sea <span class="citation" data-cites="vollset2022 ices2024">(<a href="#ref-vollset2022" role="doc-biblioref">Vollset et al. 2022</a>; <a href="#ref-ices2024" role="doc-biblioref">ICES 2024</a>)</span> <a href="#fig-bal" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<div id="fig-lifecycle" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lifecycle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="Introduction_files/images/lifecycle-salmon-figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600">
+<a href="Introduction_files/images/lifecycle-salmon-figure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Atlantic salmon life cycle (source: [@mobley2021])"><img src="Introduction_files/images/lifecycle-salmon-figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lifecycle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Atlantic salmon life cycle (source: <span class="citation" data-cites="mobley2021">(<a href="#ref-mobley2021" role="doc-biblioref">Mobley et al. 2021</a>)</span>)
 </figcaption>
 </figure>
 </div>
-<p>Available data indicates that growth plays a crucial role in the main demographic transitions throughout the salmon life cycle, influenced by trade-offs specific to each sex.</p>
+<p>Available data indicates that growth plays a crucial role in the main demographic transitions throughout the salmon life cycle. In fact :</p>
 <ul>
 <li><p>Growth is a key integrative trait of global change (including climate change) that reflects an individual’s ability to acquire resources from its environment, assimilate them, and allocate them to various functions.</p></li>
-<li><p>Growth is also a life-history trait (LHT) influenced by trade-offs with other major LHTs, such as individual mortality <span class="citation" data-cites="friedland2009">(<a href="#ref-friedland2009" role="doc-biblioref">Friedland et al. 2009</a>)</span> or size and age at maturation <span class="citation" data-cites="mobley2021">(<a href="#ref-mobley2021" role="doc-biblioref">Mobley et al. 2021</a>)</span>, among others.</p></li>
+<li><p>Growth is also a LHT influenced by trade-offs with other major LHTs (specific to each sex), such as individual mortality <span class="citation" data-cites="friedland2009">(<a href="#ref-friedland2009" role="doc-biblioref">Friedland et al. 2009</a>)</span> or size and age at maturation <span class="citation" data-cites="mobley2021">(<a href="#ref-mobley2021" role="doc-biblioref">Mobley et al. 2021</a>)</span>, among others.</p></li>
 </ul>
 <p>Specifically, the size of individuals during the smolt migration to the sea increases the probability of survival and successful return (<em>i.e</em> “bigger is better”: <span class="citation" data-cites="gregory2019 simmons2021">(<a href="#ref-gregory2019" role="doc-biblioref">Gregory et al. 2019</a>; <a href="#ref-simmons2021" role="doc-biblioref">Simmons et al. 2021</a>)</span>). Additionally, the decision to sexually mature, which determines the return for reproduction, is partly influenced by reaching a size threshold at the end of the first summer at sea, with larger individuals having a greater likelihood of triggering maturation <span class="citation" data-cites="mobley2021 tréhin2022">(<a href="#ref-mobley2021" role="doc-biblioref">Mobley et al. 2021</a>; <a href="#ref-tréhin2022" role="doc-biblioref">Tréhin 2022</a>)</span>. This threshold is typically higher for females, who, on average, have a lower probability of maturing after just one winter at sea compared to males of similar size.</p>
 <p><strong>Given the importance of growth in demographic processes, any change in growth due to environmental variations will have significant impacts on population structure and, ultimately, population dynamics.</strong></p>
@@ -191,17 +193,16 @@ Figure&nbsp;3: Atlantic salmon life cycle (source: <span class="citation" data-c
 </section>
 <section id="micro-project-framework" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="micro-project-framework"><span class="header-section-number">1.4</span> Micro-project framework</h2>
-<p>This micro-project is part of a broader framework of a PhD research aiming to analyze the influence of individual growth variations on the population dynamics of Atlantic salmon. The goal is to improve the tools used to assess their status and propose more robust management measures adapted to environmental pressures. <strong>The first step of this project involves characterizing key demographic transitions during the marine phase of Atlantic salmon in relation to individual size.</strong></p>
+<p>This micro-project is part of a broader framework of a PhD research aiming to analyze the influence of individual growth variations on the population dynamics of Atlantic salmon. The goal is to improve the tools used to assess their status and propose more robust management measures adapted to environmental pressures. <strong>The first step of this project involves characterizing key demographic transitions (survival and maturation) during the marine phase of Atlantic salmon in relation to individual size.</strong></p>
 <p>A major challenge lies in drawing conclusions about the hidden processes that occur during the marine phase. <strong>To address this challenge, indirect information on individual growth during these hidden stages is obtained through the analysis of archival tissues (see <a href="#sec-data" class="quarto-xref">Section&nbsp;3.2</a>).</strong></p>
 <p><strong>A structured model has been developed to accommodate the complex life cycle of Atlantic salmon (see <a href="#sec-model" class="quarto-xref">Section&nbsp;3.3</a>).</strong> It was built within an integrated hierarchical statistical modeling framework <span class="citation" data-cites="schaub2011 zipkin2019">(<a href="#ref-schaub2011" role="doc-biblioref">Schaub and Abadi 2011</a>; <a href="#ref-zipkin2019" role="doc-biblioref">Zipkin, Inouye, and Beissinger 2019</a>)</span> in order to combine diverse sources of observations to infer hidden demographic processes.</p>
 </section>
 </section>
 <section id="objectives" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Objectives</h1>
-<p><u>The current modeling has limitations :</u></p>
-<p>While it accounts for annual data and sex proportions, it does not incorporate these factors into the formalization of size-dependent survival and maturation transitions. <strong>The first objective</strong> is to improve the modeling of survival and maturation processes by integrating annual variations and sex differences, based on existing literature.</p>
-<p>The current model uses indirect size information from scales, assuming an isometric relationship between scale size and body size. However, this assumption appears inconsistent with findings in the literature. <strong>The second objective</strong> is to introduce three back-calculation models for estimating salmon body size from scale size, chosen based on literature, and assess the variability introduced by their application.</p>
-<p>Due to the current reliance on scale size modeling, no direct links with population state indicators used in management could be established. <strong>The final objective</strong> is to leverage the three back-calculation models to develop a direct connection to egg deposition (a proxy for fecundity and population renewal), which will provide valuable insights for management decisions.</p>
+<p>The current modeling has limitations, while it accounts for annual data and sex proportions, it does not incorporate these factors into the formalization of size-dependent survival and maturation transitions. <strong>The first objective is to improve the modeling of survival and maturation processes by integrating annual variations and sex differences, based on existing literature.</strong></p>
+<p>The current model uses indirect size information from scales, assuming an isometric relationship between scale size and body size. However, this assumption appears inconsistent with findings in the literature. <strong>The second objective is to introduce back-calculation models (three different) for estimating salmon body size from scale size, chosen based on literature, and assess the variability introduced by their applications.</strong></p>
+<p>Due to the current reliance on scale size modeling, no direct links with population state indicators used in management could be established. <strong>The final objective is to leverage the three models with back-calculation and develop a direct connection to egg deposition (a proxy for fecundity and population renewal), which will provide valuable insights for management decisions.</strong></p>
 </section>
 <section id="resources" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Resources</h1>
@@ -209,33 +210,32 @@ Figure&nbsp;3: Atlantic salmon life cycle (source: <span class="citation" data-c
 <h2 data-number="3.1" class="anchored" data-anchor-id="study-site"><span class="header-section-number">3.1</span> Study site</h2>
 <p><strong>This work is based on long-term monitoring data (24 years of smolt cohorts from 1996 to 2019) of natural salmon populations</strong> collected by the <em>Observatoire de Recherche en Environnement petits Fleuves Côtiers</em> (ORE DiaPFC) and the <em>Centre National pour l’Interprétation des Captures de Salmonidés</em> (CNICS). These data are centralized in information systems managed by INRAE.</p>
 <p><strong>Specifically, the data pertain to the Scorff salmon population, a river in the Morbihan region of Brittany.</strong> The Scorff drains a 483 km² basin over a 77 km course, joining the Blavet at a common estuary near Lorient <a href="#fig-scorff" class="quarto-xref">Figure&nbsp;4</a>. A migration monitoring station has been operational since 1994 at the <em>Moulin des Princes</em> (MdP) site in Pont-Scorff <a href="#fig-mdp" class="quarto-xref">Figure&nbsp;5</a>. This station enables the trapping of smolts during downstream migration and adults during upstream migration. Each captured salmon is measured, weighed, and has scales sampled before being released. The collected scales are archived in the ichthyological collection COLISA <span class="citation" data-cites="marchand">(<a href="#ref-marchand" role="doc-biblioref">Marchand et al., n.d.</a>)</span>, managed by INRAE and OFB.</p>
-<div id="fig-scorff" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<div id="fig-scorff" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-scorff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="Introduction_files/images/scorff-figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600">
+<a href="Introduction_files/images/scorff-figure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Distribution of amphihaline migrants in the Scorff catchment in 2012 (Sources &amp; Production : @Bretagne Grands Migrateurs)"><img src="Introduction_files/images/scorff-figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="700"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scorff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Distribution of amphihaline migrants in the Scorff catchment in 2012 (Sources: Onema, 2011, Jouanin et al., 2012 - Production: BGM)
+Figure&nbsp;4: Distribution of amphihaline migrants in the Scorff catchment in 2012 (Sources &amp; Production : @Bretagne Grands Migrateurs)
 </figcaption>
 </figure>
 </div>
 </section>
 <section id="sec-data" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="sec-data"><span class="header-section-number">3.2</span> Data</h2>
-<p>The data, which has not yet been published, will be shared with you via USB during the first session. Please ensure that the data is deleted after the completion of the course.</p>
 <section id="abundance-estimations" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="abundance-estimations"><span class="header-section-number">3.2.1</span> Abundance estimations</h3>
 <p>The counting data collected at the MdP station <a href="#fig-mdp" class="quarto-xref">Figure&nbsp;5</a> are imperfect, as some salmon can bypass the trap, particularly during periods of heavy rainfall. To address this, mark-recapture experiments are conducted to estimate:</p>
 <ul>
 <li><p><strong>Trap efficiency</strong> based on flow conditions,</p></li>
 <li><p><strong>The abundance of migrating smolts</strong> (across all age classes),</p></li>
-<li><p><strong>Adult returns</strong>, categorized into two age classes: 1SW (one-sea-winter) and 2SW (two-sea-winter).</p></li>
+<li><p><strong>The abundance of adult returns</strong>, categorized into two age classes: 1SW (one-sea-winter) and 2SW (two-sea-winter).</p></li>
 </ul>
 <p>These estimates, derived from 24 years of data, are produced using Bayesian hierarchical models that account for imperfect detection <span class="citation" data-cites="mathieu2019">(<a href="#ref-mathieu2019" role="doc-biblioref">Mathieu et al. 2019</a>)</span>.</p>
-<div id="fig-mdp" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<div id="fig-mdp" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mdp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="Introduction_files/images/mdp-figure.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400">
+<a href="Introduction_files/images/mdp-figure.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Moulin des Princes station on the Scorff river (Photo: @Eliot Boulaire)"><img src="Introduction_files/images/mdp-figure.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mdp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5: Moulin des Princes station on the Scorff river (Photo: @Eliot Boulaire)
@@ -246,30 +246,30 @@ Figure&nbsp;5: Moulin des Princes station on the Scorff river (Photo: @Eliot Bou
 <section id="molecular-sexing" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="molecular-sexing"><span class="header-section-number">3.2.2</span> Molecular sexing</h3>
 <p>Sexual dimorphism in salmon at the time of trapping (both at the smolt and adult stages) is not pronounced enough to allow reliable sex identification.</p>
-<p>To address this, a sample of 30 scales from 30 different individuals per smolt cohort year and life-stage was selected to determine sex using DNA extracted from scale tissues (<em>i.e.</em>, molecular sexing: Besnard et al., 2023). However, reliable sex identification was only possible for a subset of the sample, as DNA extracted from older scales was often too degraded. Additionally, since sexing was not performed after 2018, limited information is available for the most recent cohorts.</p>
+<p>To address this, a sample of 30 scales from 30 different individuals per smolt cohort year and life-stage was selected to determine sex using DNA extracted from scale tissues (<em>i.e.</em>, molecular sexing: <span class="citation" data-cites="besnard">(<a href="#ref-besnard" role="doc-biblioref">Besnard et al., n.d.</a>)</span>). However, reliable sex identification was only possible for a subset of the sample, as DNA extracted from older scales was often too degraded. Additionally, since sexing was not performed after 2018, limited information is available for the most recent cohorts.</p>
 </section>
 <section id="scale-size" class="level3" data-number="3.2.3">
 <h3 data-number="3.2.3" class="anchored" data-anchor-id="scale-size"><span class="header-section-number">3.2.3</span> Scale size</h3>
 <p>The model uses individual data from scale readings to indirectly estimate the size structure of the population <a href="#fig-scale" class="quarto-xref">Figure&nbsp;6</a>. Scales are calcified structures that grow alongside the individual and allow the reconstruction of individual life histories. Moreover, they are easy to collect, and have minimal impact on the fish’s life (compare to otoliths).</p>
-<p>A sample of 30 scales from 30 different individuals per smolt cohort year and life-stage was selected to determine the growth ring sizes at various life-stages <span class="citation" data-cites="besnard">(<a href="#ref-besnard" role="doc-biblioref">Besnard et al., n.d.</a>)</span> <a href="#fig-scale" class="quarto-xref">Figure&nbsp;6</a>. We used adult scales (1SW and 2SW) to assess the size structure of various latent life-stages (<em>i.e</em> surviving smolts, post-smolts : see <a href="#sec-model" class="quarto-xref">Section&nbsp;3.3</a>) with the main hypothesis that return adults are a sub-sample of each latent life-stages <a href="#fig-scale" class="quarto-xref">Figure&nbsp;6</a>.</p>
-<div id="fig-scale" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<p>A sample of 30 scales from 30 different individuals per smolt cohort year and life-stage was selected to determine the growth ring sizes at various life-stages <a href="#fig-scale" class="quarto-xref">Figure&nbsp;6</a>. We used adult scales (1SW and 2SW) to assess the size structure of various latent life-stages (<em>i.e</em> post-smolts : see <a href="#sec-model" class="quarto-xref">Section&nbsp;3.3</a>) with the main hypothesis that return adults are a sub-sample of each latent life-stages <a href="#fig-model" class="quarto-xref">Figure&nbsp;8</a>.</p>
+<div id="fig-scale" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-scale-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="Introduction_files/images/scale-size-figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400">
+<a href="Introduction_files/images/scale-size-figure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Schematic representation of the identification of length marks on scales of smolts, 1SW returns and 2SW returns adults. Discovery V8 stereomicroscope (Zeiss) and Infinity 3 optical camera (Lumenera). (Source: [@tréhin2022] - Photo: @Ludivine Lamireau - Production: @Eliot Boulaire)."><img src="Introduction_files/images/scale-size-figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="700"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scale-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Identification of growth on an adult scale of a salmon that has spent two winters at sea (2HM): Schematic representation of seasonal growth increments (blue= Smolt; purple= Post-smolt; orange= 1SW; green= 2SW). Discovery V8 stereomicroscope (Zeiss) and Infinity 3 optical camera (Lumenera). (Source: <span class="citation" data-cites="tréhin2022">(<a href="#ref-tréhin2022" role="doc-biblioref">Tréhin 2022</a>)</span> - Photo: @Ludivine Lamireau - Production: @Eliot Boulaire).
+Figure&nbsp;6: Schematic representation of the identification of length marks on scales of smolts, 1SW returns and 2SW returns adults. Discovery V8 stereomicroscope (Zeiss) and Infinity 3 optical camera (Lumenera). (Source: <span class="citation" data-cites="tréhin2022">(<a href="#ref-tréhin2022" role="doc-biblioref">Tréhin 2022</a>)</span> - Photo: @Ludivine Lamireau - Production: @Eliot Boulaire).
 </figcaption>
 </figure>
 </div>
 <p>The scales are collected from a “standard zone” <a href="#fig-stdzone" class="quarto-xref">Figure&nbsp;7</a> on the fish’s body, where scales first develop during the fry stage. The scale size from this area is the most strongly correlated with the salmon’s body size <span class="citation" data-cites="baglinière1985 shearer1992">(<a href="#ref-baglinière1985" role="doc-biblioref">Baglinière et al. 1985</a>; <a href="#ref-shearer1992" role="doc-biblioref">Shearer 1992</a>)</span>.</p>
-<div id="fig-stdzone" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<div id="fig-stdzone" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-stdzone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="Introduction_files/images/zone-prelev-figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400">
+<a href="Introduction_files/images/zone-prelev-figure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Lateral diagram of an Atlantic salmon and the standard scale collection area according to the international recommendations of the ICES report (Source: [@ices2024] - Production: [@gueguen1994])."><img src="Introduction_files/images/zone-prelev-figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stdzone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Lateral diagram of an Atlantic salmon and the standard scale collection area according to the international recommendations of the ICES report (Source: ICES 1984 - Production: Gueguen and Prouzet 1995).
+Figure&nbsp;7: Lateral diagram of an Atlantic salmon and the standard scale collection area according to the international recommendations of the ICES report (Source: <span class="citation" data-cites="ices2024">(<a href="#ref-ices2024" role="doc-biblioref">ICES 2024</a>)</span> - Production: <span class="citation" data-cites="gueguen1994">(<a href="#ref-gueguen1994" role="doc-biblioref">Gueguen and Prouzet 1994</a>)</span>).
 </figcaption>
 </figure>
 </div>
@@ -279,39 +279,31 @@ Figure&nbsp;7: Lateral diagram of an Atlantic salmon and the standard scale coll
 <h2 data-number="3.3" class="anchored" data-anchor-id="sec-model"><span class="header-section-number">3.3</span> Model</h2>
 <p><strong>A model structured by stage, age, sex, and size, with a focus on the marine phase, has been developed to track the population dynamics of Atlantic salmon from smolt migration downstream to the return of adults <a href="#fig-model" class="quarto-xref">Figure&nbsp;8</a>.</strong></p>
 <ul>
-<li><p>During downstream migration in April, smolts experience low survival rates, particularly during the migration itself and the first month at sea. This survival appears to be size-dependent, forming a latent stage of surviving smolts.</p></li>
-<li><p>These surviving smolts grow and reach a post-smolt size by November, at which point they face a maturation decision. This decision, also seemingly influenced by individual size, determines the age of return. A subsequent survival rate—considered fixed and not size-dependent—applies to the period between maturation and return.</p></li>
-<li><p>Over this time, salmon continue to grow and ultimately reach the size of returning adults, categorized as either 1SW or 2SW.</p></li>
+<li><p>During downstream migration in april, smolts (N<sub>3</sub>) experience low survival rates, particularly during the migration itself and the first month at sea. This survival appears to be size-dependent, forming a latent stage of post-smolts (N<sub>4</sub>) in november.</p></li>
+<li><p>At the end of the first summer (november), post-smolts (N<sub>4</sub>) face a maturation decision. This decision, also seemingly influenced by individual size, determines the age of adult returns (1SW or 2SW). This transition forms the maturing post-smolts (N<sub>5</sub>) and the non-maturing ones (N<sub>8</sub>).</p></li>
+<li><p>Then these post-smolts (N<sub>5</sub> &amp; N<sub>8</sub>) will face another survival rate during the second summer at sea (considered fixed) and depending on the time spending at sea. Maturing post-smolts will spends a lower time at sea (returning during of the smolt migration year +1), leading to 1SW adult returns (). Non-maturing post-smolts will spends a longer time (returning during of the smolt migration year +2), leading to 2SW adult returns.</p></li>
 </ul>
-<p>It’s important to note that the model currently does not explicitly incorporate growth processes, which is why growth transitions are represented as dashed lines. Instead, the model links abundance across transitions, without directly modeling growth dynamics.</p>
-<div id="fig-model" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<p>It’s important to note that the model currently does not explicitly incorporate growth processes, which is why we have disruptance in size structure (symbolizing by breaks) in the model. Instead, the model links abundance and sex ratios across transitions, without directly modeling growth dynamics. For more information’s you can see the model R code with deeper explanations and glossary of variables names (see linked model in HTML format).</p>
+<div id="fig-model" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="Introduction_files/images/model-figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600">
+<a href="Introduction_files/images/model-figure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: Schematic representation of the salmon stage-, age-, sex-, size-based life cycle model (boxes= life-stages, ovals= demographic transitions ; grey fill=latent variables, white fill= observed variables ; red color=estimated transitions, black color=fixed transitions ; blue outlines=marine phase, green outlines=freshwater phase). (Production: @Eliot Boulaire)."><img src="Introduction_files/images/model-figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="700"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: Schematic representation of the salmon stage-, age-, sex-, size-based life cycle model (boxes= stages, ovals= demographic transitions ; grey fill=latent variables, white fill= observed variables ; blue color= smolt, purple color= post-smolt, orange color= 1SW, green color= 2SW ; normal pictogram= size structure, sex pictogram= sex ratio, salmons pictogram= abundance). (Production: @Eliot Boulaire).
+Figure&nbsp;8: Schematic representation of the salmon stage-, age-, sex-, size-based life cycle model (boxes= life-stages, ovals= demographic transitions ; grey fill=latent variables, white fill= observed variables ; red color=estimated transitions, black color=fixed transitions ; blue outlines=marine phase, green outlines=freshwater phase). (Production: @Eliot Boulaire).
 </figcaption>
 </figure>
 </div>
-<p>The integrated hierarchical framework synthesizes data on abundance, sex ratio, and size structure from both observable and latent stages to infer marine survival and maturity rates. Direct information on abundance, sex ratio, and size structure is available only for observable stages, while latent stages rely on indirect information about size structure.</p>
+<p>The integrated hierarchical framework synthesizes data on abundance, sex ratio, and size structure from both observable and latent stages to infer marine survival rate and maturity rates. Direct information on abundance, sex ratio, and size structure is available only for observable stages, while latent stages rely on indirect information about size structure.</p>
 <p>Given the multiple life-history strategies in the marine environment (e.g., 1SW and 2SW returns), the model’s temporal framework is normalized to the years of smolt cohorts at downstream migration, spanning cohorts from 1996 to 2019.</p>
 </section>
 </section>
-<section id="guidelines" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Guidelines</h1>
-<ol type="1">
-<li><p>A</p></li>
-<li><p>B</p></li>
-<li><p>C</p></li>
-</ol>
-</section>
-<section id="bibliography" class="level1 unnumbered" data-number="5">
+<section id="bibliography" class="level1 unnumbered" data-number="4">
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">5 Bibliography</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">4 Bibliography</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-baglinière1985" class="csl-entry" role="listitem">
 Baglinière, J. L., P. Bomassi, B. Bousquet, F. Chancerel, H. De Pontual, J. Dumas, G. Euzenat, et al. 1985. <span>“La détermination de l’âge par scalimétrie chez le saumon atlantique (Salmo salar) dans son aire de répartition méridionale : utilisation pratique et difficultés de la méthode.”</span> <em>Bulletin Français de la Pêche et de la Pisciculture</em>, no. 298: 69–105. <a href="https://doi.org/10.1051/kmae:1985002">https://doi.org/10.1051/kmae:1985002</a>.
 </div>
@@ -335,6 +327,9 @@ Friedland, Kevin D., Julian C. MacLean, Lars P. Hansen, Arnaud J. Peyronnet, Lar
 </div>
 <div id="ref-gregory2019" class="csl-entry" role="listitem">
 Gregory, Anton T Ibbotson, William D Riley, Marie Nevoux, Rasmus B Lauridsen, Ian C Russell, J Robert Britton, Phillipa K Gillingham, Olivia M Simmons, and Etienne Rivot. 2019. <span>“Atlantic Salmon Return Rate Increases with Smolt Length.”</span> <em>ICES Journal of Marine Science</em> 76 (6): 1702–12. <a href="https://doi.org/10.1093/icesjms/fsz066">https://doi.org/10.1093/icesjms/fsz066</a>.
+</div>
+<div id="ref-gueguen1994" class="csl-entry" role="listitem">
+Gueguen, Jacques C., and Patrick Prouzet. 1994. <em>Le saumon atlantique: biologie et gestion de la ressource</em>. Editions Quae.
 </div>
 <div id="ref-hanson2020" class="csl-entry" role="listitem">
 Hanson, Nora, James Ounsley, Tim Burton, Sonya Auer, James H. Hunt, Brian Shaw, Jim Henderson, and Stuart J. Middlemas. 2020. <span>“Hierarchical Analysis of Wild Atlantic Salmon (Salmo Salar) Fecundity in Relation to Body Size and Developmental Traits.”</span> <em>Journal of Fish Biology</em> 96 (2): 316–26. <a href="https://doi.org/10.1111/jfb.14181">https://doi.org/10.1111/jfb.14181</a>.
@@ -825,6 +820,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","loop":false,"selector":".lightbox","closeEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
