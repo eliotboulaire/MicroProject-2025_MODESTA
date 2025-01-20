@@ -1,0 +1,164 @@
+---
+title: "Run Models"
+author: "Eliot Boulaire"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(root.dir = rstudioapi::getActiveProject(), echo = TRUE)
+rm(list = ls())
+
+pkginstall <- function(packages) {
+  for (pkg in packages) {
+    if (!require(pkg, character.only = TRUE)) {
+      message(paste("Installation du package manquant:", pkg))
+      install.packages(pkg, dependencies = TRUE)
+      library(pkg, character.only = TRUE)
+      message(paste(pkg, "chargé avec succès"))
+    } else {
+      message(paste("Le package", pkg, "est déjà installé."))
+      library(pkg, character.only = TRUE)
+      message(paste(pkg, "chargé avec succès"))
+    }
+  }
+}
+
+packages <- c("nimble", "coda")
+pkginstall(packages)
+
+HOME <- rstudioapi::getActiveProject()
+```
+
+# Introduction
+
+## Load data
+
+```{r datas}
+data <- readRDS(paste0(HOME, "/Project/data/realdata/data.rds"))
+const <- readRDS(paste0(HOME, "/Project/data/realdata/const.rds"))
+```
+
+## Load initials values
+
+```{r inits}
+inits_3chains <- readRDS(paste0(HOME,"/Project/data/realdata/inits_3chains.rds"))
+inits_1chain <- readRDS(paste0(HOME, "/Project/data/realdata/inits_1chain.rds"))
+```
+
+## Define monitored values
+
+```{r monitor}
+monitor <- c(
+  "Mu_L3", "Mu_L41", "Mu_L42", "Mu_L5", "Mu_L8", "Mu_L6", "Mu_L9",
+  "Sd_L3", "Sd_L41", "Sd_L42", "Sd_L5", "Sd_L8", "Sd_L6", "Sd_L9",
+  "Mu_N3", "Mu_N6", "Mu_N9",
+  "Psex_SR3", "Psex_SR6", "Psex_SR9",
+  "Alpha3", "Beta3", "Alpha4", "Beta4"
+)
+```
+
+## Load the model
+
+```{r model}
+source(paste0(HOME, "/Project/model/SALMSIZE-MARSIM.R"))
+```
+
+## Load the NimbleFunctions used inside the model
+
+```{r functions}
+source(paste0(HOME, "/Project/functions/nf_omega.R"))
+source(paste0(HOME, "/Project/functions/nf_midbins.R"))
+source(paste0(HOME, "/Project/functions/nf_prop.R"))
+```
+
+## Define MCMC settings
+
+```{r MCMC}
+n_chains = 3
+n_thin = 30
+n_keep = 1000
+n_burnin = 20000
+n_iter = n_keep * n_thin + n_burnin
+```
+
+# Run Bayesian Models (with NIMBLE)
+
+Steps to perform MCMC estimations on hierarchical bayesian model using NIMBLE system
+
+## Step 1 : Build nimble model
+
+```{r buildmodel}
+model_nimble <- nimbleModel(
+  code = model_code,
+  name = 'model_nimble',
+  constants = const,
+  data = data,
+  inits = inits_1chain
+)
+# model_nimble$initializeInfo()
+# model_nimble$calculate()
+```
+
+## Step 2 : Compile the model
+
+```{r compilemodel}
+compiled_model <- compileNimble(model_nimble)
+```
+
+## Step 3 : Create a MCMC sampler for the model
+
+```{r MCMCsampler}
+# Here we use the RAW sampler (base sampler in nimble)
+model_conf <- configureMCMC(
+  model = model_nimble,
+  thin = 1,
+  monitors = monitor,
+  inits = inits_1chain,
+  enableWAIC = TRUE
+)
+
+model_MCMC <- buildMCMC(model_conf)
+# model_MCMC$run(niter = 0)
+```
+
+## Step 4 : Compile the existing model with the associated MCMC sampler
+
+```{r compileAll}
+compiled_MCMC <- compileNimble(model_MCMC, project = model_nimble)
+```
+
+## Step 5 : Run MCMC
+
+```{r runMCMC}
+set.seed(123)
+
+MCMC_samples <- runMCMC(
+  mcmc = compiled_MCMC,
+  niter = n_iter,
+  nburnin = n_burnin,
+  nchains = n_chains,
+  thin = n_thin,
+  inits = inits_3chains,
+  progressBar = TRUE,
+  samples = TRUE,
+  samplesAsCodaMCMC = TRUE,
+  summary = FALSE,
+  WAIC = TRUE # FALSE you don't want WAIC
+)
+```
+
+## Step 6 : Save MCMC
+
+```{r saveMCMC}
+is(MCMC_samples$samples)
+varnames(MCMC_samples$samples)
+
+saveRDS(MCMC_samples, file = paste0(HOME, "/Project/saves/MCMC_base.rds")) # Change the name of the file as you want
+```

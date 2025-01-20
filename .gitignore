@@ -49,10 +49,13 @@ po/*~
 rsconnect/
 
 # Raw data
-Project/data/
+Project/data/*
+!Project/data/README.md
 
 # Saved data
-Project/saves/
+Project/saves/*
+!Project/saves/README.md
 
 # Results graphs
-Project/results/
+Project/results/*
+!Project/results/README.md

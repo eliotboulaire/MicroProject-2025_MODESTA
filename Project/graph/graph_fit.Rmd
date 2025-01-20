@@ -1,0 +1,491 @@
+---
+title: "Fit graphs"
+author: "Eliot Boulaire"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(root.dir = rstudioapi::getActiveProject(), echo = TRUE)
+rm(list = ls())
+
+pkginstall <- function(packages) {
+  for (pkg in packages) {
+    if (!require(pkg, character.only = TRUE)) {
+      message(paste("Installation du package manquant:", pkg))
+      install.packages(pkg, dependencies = TRUE)
+      library(pkg, character.only = TRUE)
+      message(paste(pkg, "chargé avec succès"))
+    } else {
+      message(paste("Le package", pkg, "est déjà installé."))
+      library(pkg, character.only = TRUE)
+      message(paste(pkg, "chargé avec succès"))
+    }
+  }
+}
+
+packages <- c("dplyr", "tidyr", "ggplot2", "coda")
+pkginstall(packages)
+
+HOME <- rstudioapi::getActiveProject()
+```
+
+# Introduction
+
+The purpose of this code is to run bayesian models with R using the nimble package (...).
+
+## Load mcmc
+
+(You have to change the path of all the registered and loading elements)
+
+```{r load}
+MCMC_samples <- readRDS(paste0(HOME, "/Project/saves/MCMC_base.rds"))
+varnames(MCMC_samples$samples)
+```
+
+## Create matrix
+
+```{r}
+## Définition d'une matrice de données
+MCMC_matrix <- as.matrix(MCMC_samples$samples)
+colnames(MCMC_matrix)
+```
+
+# Size structure
+
+## Introduction
+
+```{r}
+idxmul <- grep("Mu_L", colnames(MCMC_matrix))
+MCMC_MuL <- MCMC_matrix[,idxmul]
+
+idxsdl <- grep("Sd_L", colnames(MCMC_matrix))
+MCMC_SdL <- MCMC_matrix[,idxsdl]
+
+num_iterations <- nrow(MCMC_MuL)
+num_params <- ncol(MCMC_MuL)
+
+quantiles <- c(0.025, 0.25, 0.50, 0.75, 0.975)
+num_quantiles <- length(quantiles)
+```
+
+## Fit
+
+### Estimations
+
+```{r}
+Scales_L_est <- matrix(NA, nrow = num_params, ncol = num_quantiles)
+for (p in 1:num_params) {
+  mean_MCMC_MuL <- mean(MCMC_MuL[1:num_iterations, p])
+  mean_MCMC_SdL <- mean(MCMC_SdL[1:num_iterations, p])
+  Scales_L_est[p, 1:num_quantiles] <- qnorm(p = quantiles, mean = mean_MCMC_MuL, sd = mean_MCMC_SdL)
+}
+```
+
+```{r}
+df_Scales_L_est <- data.frame(
+  Type = "Estimation",
+  SizeSt = rep(c("SM", "SM", "PSM", "PSM", "PSM", "AD", "AD"), each = 24),
+  Variable = rep(c("Visible", "Latent", "Latent", "Latent", "Latent", "Visible", "Visible"), each = 24),
+  Stage = rep(c("Smolt", "Post-smolt1", "Post-smolt2", "Mature post-smolt ", "Non-mature post-smolt", "1SW adults", "2SW adults"), each = 24),
+  Cohort = as.numeric(rep(1996:2019, times = 7)),
+  Q2.5 = as.vector(Scales_L_est[,1]),
+  Q25 = as.vector(Scales_L_est[,2]),
+  Q50 = as.vector(Scales_L_est[,3]),
+  Q75 = as.vector(Scales_L_est[,4]),
+  Q97.5 = as.vector(Scales_L_est[,5])
+)
+```
+
+```{r}
+ggplot(data = df_Scales_L_est, aes(x = Cohort)) +
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = "Estimation"), alpha = 0.2, linewidth = 0.5) +
+  geom_ribbon(aes(ymin = Q25, ymax = Q75, fill = "Estimation"), alpha = 0.2, linewidth = 0.5) +
+  geom_line(aes(y = Q50, color = "Estimation"), linewidth = 1) +
+  facet_wrap(~ Stage, scales = "free_y") +
+  labs(x="Années de cohortes", y="Taille d'écailles (mm)") +
+  scale_color_manual(values = c("Estimation" = "black")) +
+  scale_fill_manual(values = c("Estimation" = "black")) +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+
+### Data
+
+```{r}
+Scales_L3 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L3.csv"), row.names = 1)
+Scales_L41 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L41.csv"), row.names = 1)
+
+Scales_L42 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L42.csv"), row.names = 1)
+Scales_L5 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L5.csv"), row.names = 1)
+Scales_L8 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L8.csv"), row.names = 1)
+
+Scales_L6 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L6.csv"), row.names = 1)
+Scales_L9 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L9.csv"), row.names = 1)
+```
+
+```{r}
+Scales_L3_obs <- Scales_L3 %>%
+  pivot_longer(cols = everything(), names_to = "Cohort", values_to = "Values") %>%
+  na.omit() %>%
+  group_by(Cohort) %>%
+  summarize(
+    Q2.5 = quantile(Values, probs = 0.025),
+    Q25 = quantile(Values, probs = 0.25),
+    Q50 = quantile(Values, probs = 0.50),
+    Q75 = quantile(Values, probs = 0.75),
+    Q97.5 = quantile(Values, probs = 0.975)
+  )
+
+Scales_L41_obs <- Scales_L41 %>%
+  pivot_longer(cols = everything(), names_to = "Cohort", values_to = "Values") %>%
+  na.omit() %>%
+  group_by(Cohort) %>%
+  summarize(
+    Q2.5 = quantile(Values, probs = 0.025),
+    Q25 = quantile(Values, probs = 0.25),
+    Q50 = quantile(Values, probs = 0.50),
+    Q75 = quantile(Values, probs = 0.75),
+    Q97.5 = quantile(Values, probs = 0.975)
+  )
+
+Scales_L42_obs <- Scales_L42 %>%
+  pivot_longer(cols = everything(), names_to = "Cohort", values_to = "Values") %>%
+  na.omit() %>%
+  group_by(Cohort) %>%
+  summarize(
+    Q2.5 = quantile(Values, probs = 0.025),
+    Q25 = quantile(Values, probs = 0.25),
+    Q50 = quantile(Values, probs = 0.50),
+    Q75 = quantile(Values, probs = 0.75),
+    Q97.5 = quantile(Values, probs = 0.975)
+  )
+
+Scales_L5_obs <- Scales_L5 %>%
+  pivot_longer(cols = everything(), names_to = "Cohort", values_to = "Values") %>%
+  na.omit() %>%
+  group_by(Cohort) %>%
+  summarize(
+    Q2.5 = quantile(Values, probs = 0.025),
+    Q25 = quantile(Values, probs = 0.25),
+    Q50 = quantile(Values, probs = 0.50),
+    Q75 = quantile(Values, probs = 0.75),
+    Q97.5 = quantile(Values, probs = 0.975)
+  )
+
+Scales_L8_obs <- Scales_L8 %>%
+  pivot_longer(cols = everything(), names_to = "Cohort", values_to = "Values") %>%
+  na.omit() %>%
+  group_by(Cohort) %>%
+  summarize(
+    Q2.5 = quantile(Values, probs = 0.025),
+    Q25 = quantile(Values, probs = 0.25),
+    Q50 = quantile(Values, probs = 0.50),
+    Q75 = quantile(Values, probs = 0.75),
+    Q97.5 = quantile(Values, probs = 0.975)
+  )
+
+Scales_L6_obs <- Scales_L6 %>%
+  pivot_longer(cols = everything(), names_to = "Cohort", values_to = "Values") %>%
+  na.omit() %>%
+  group_by(Cohort) %>%
+  summarize(
+    Q2.5 = quantile(Values, probs = 0.025),
+    Q25 = quantile(Values, probs = 0.25),
+    Q50 = quantile(Values, probs = 0.50),
+    Q75 = quantile(Values, probs = 0.75),
+    Q97.5 = quantile(Values, probs = 0.975)
+  )
+
+Scales_L9_obs <- Scales_L9 %>%
+  pivot_longer(cols = everything(), names_to = "Cohort", values_to = "Values") %>%
+  na.omit() %>%
+  group_by(Cohort) %>%
+  summarize(
+    Q2.5 = quantile(Values, probs = 0.025),
+    Q25 = quantile(Values, probs = 0.25),
+    Q50 = quantile(Values, probs = 0.50),
+    Q75 = quantile(Values, probs = 0.75),
+    Q97.5 = quantile(Values, probs = 0.975)
+  )
+
+Scales_L_obs <- bind_rows(Scales_L3_obs,Scales_L41_obs, Scales_L42_obs, Scales_L5_obs, Scales_L6_obs, Scales_L8_obs, Scales_L9_obs)
+```
+
+```{r}
+df_Scales_L_obs <- Scales_L_obs %>%
+  mutate(Type = "Data",
+         SizeSt = rep(c("SM", "SM", "PSM", "PSM", "PSM", "AD", "AD"), each = 24),
+         Variable = rep(c("Visible", "Latent", "Latent", "Latent", "Latent", "Visible", "Visible"), each = 24),
+         Stage = rep(c("Smolt", "Post-smolt1", "Post-smolt2", "Mature post-smolt ", "Non-mature post-smolt", "1SW adults", "2SW adults"), each = 24),
+         Cohort = as.numeric(rep(1996:2019, times = 7)))
+```
+
+```{r}
+ggplot(data = df_Scales_L_obs, aes(x = Cohort)) +
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = "Data"), alpha = 0.2, linewidth = 0.5) +
+  geom_ribbon(aes(ymin = Q25, ymax = Q75, fill = "Data"), alpha = 0.2, linewidth = 0.5) +
+  geom_line(aes(y = Q50, color = "Data"), linewidth = 1) +
+  facet_wrap(~ Stage, scales = "free_y") +
+  labs(x="Années de cohortes", y="Taille d'écailles (mm)") +
+  scale_color_manual(values = c("Data" = "red")) +
+  scale_fill_manual(values = c("Data" = "red")) +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+
+### Comparison
+
+```{r}
+ggplot(data = df_Scales_L_est, aes(x = Cohort)) +
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = "Estimation"), alpha = 0.2, linewidth = 0.3) +
+  geom_ribbon(aes(ymin = Q25, ymax = Q75, fill = "Estimation"), alpha = 0.2, linewidth = 0.3) +
+  geom_errorbar(data = df_Scales_L_obs, aes(x = Cohort, ymin = Q2.5, ymax = Q97.5, group = Cohort, color = "Data"), width = 0.4, linewidth = 0.8, linetype = "dashed") +
+  geom_errorbar(data = df_Scales_L_obs, aes(x = Cohort, ymin = Q25, ymax = Q75, group = Cohort, color = "Data"), width = 0.6, linewidth = 1) +
+  geom_point(data = df_Scales_L_obs, aes(x = Cohort, y = Q50, group = Cohort, color = "Data"), size = 2) +
+  geom_line(aes(y = Q50, color = "Estimation"), linewidth = 1.2) +
+  labs(x="Années de cohortes", y="Taille d'écailles (mm)") +
+  scale_color_manual(values = c("Estimation" = "black", "Data" = "red")) +
+  scale_fill_manual(values = c("Estimation" = "black")) +
+  facet_wrap(Stage ~ Variable, scales = "free_y") +
+  guides(fill = "none", color = "none") +
+  theme_bw()
+```
+
+# Abundance
+
+## Introduction
+
+```{r}
+idxmun <- grep("Mu_N", colnames(MCMC_matrix))
+MCMC_MuN <- MCMC_matrix[,idxmun]
+
+num_iterations <- nrow(MCMC_MuN)
+num_params <- ncol(MCMC_MuN)
+
+quantiles <- c(0.025, 0.50, 0.975)
+num_quantiles <- length(quantiles)
+```
+
+## Fit
+
+### Estimations
+
+```{r}
+Eff_N_est <- matrix(NA, nrow = num_params, ncol = num_quantiles)
+for (p in 1:num_params) {
+  Eff_N_est[p, 1:num_quantiles] <- quantile(MCMC_MuN[1:num_iterations, p], probs = quantiles)
+}
+```
+
+```{r}
+df_Eff_N_est <- data.frame(
+  Type = "Estimation",
+  Stage = rep(c("Smolt", "1SW adults", "2SW adults"), each = 24),
+  Variable = rep(c("Visible", "Visible", "Visible"), each = 24),
+  Cohort = as.numeric(rep(1996:2019, times = 3)),
+  Q2.5 = as.vector(Eff_N_est[,1]),
+  Q50 = as.vector(Eff_N_est[,2]),
+  Q97.5 = as.vector(Eff_N_est[,3])
+)
+```
+
+```{r}
+ggplot(data = df_Eff_N_est, aes(x = Cohort)) +
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = "Estimation"), alpha = 0.2, linewidth = 0.5) +
+  geom_line(aes(y = Q50, color = "Estimation"), linewidth = 1) +
+  facet_grid(Stage~ ., scales = "free_y") +
+  labs(x="Années de cohortes", y="Taille d'écailles (mm)") +
+  scale_color_manual(values = c("Estimation" = "black")) +
+  scale_fill_manual(values = c("Estimation" = "black")) +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+
+### Data
+
+```{r}
+Eff_N3 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/abundances/Eff_N3.csv"), row.names = 1)
+Eff_N3 <- Eff_N3 %>%
+  mutate(log_mean = log(mean^2/sqrt(mean^2 + sd^2)),
+         log_sd = sqrt(log(1+((sd^2)/(mean^2)))))
+Eff_N6 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/abundances/Eff_N6.csv"), row.names = 1)
+Eff_N6 <- Eff_N6 %>%
+  mutate(log_mean = log(mean^2/sqrt(mean^2 + sd^2)),
+         log_sd = sqrt(log(1+((sd^2)/(mean^2)))))
+Eff_N9 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/abundances/Eff_N9.csv"), row.names = 1)
+Eff_N9 <- Eff_N9 %>%
+  mutate(log_mean = log(mean^2/sqrt(mean^2 + sd^2)),
+         log_sd = sqrt(log(1+((sd^2)/(mean^2)))))
+
+OBS_MuN <- t(matrix(c(Eff_N3[, 3], Eff_N6[, 3], Eff_N9[, 3])))
+colnames(OBS_MuN) <- colnames(MCMC_MuN)
+
+OBS_SdN <- t(matrix(c(Eff_N3[, 4], Eff_N6[, 4], Eff_N9[, 4])))
+colnames(OBS_SdN) <- gsub("Mu", "Sd", colnames(MCMC_MuN))
+```
+
+```{r}
+Eff_N_obs <- matrix(NA, nrow = num_params, ncol = num_quantiles)
+for (p in 1:num_params) {
+  Eff_N_obs[p, 1:num_quantiles] <- qlnorm(p = quantiles, meanlog = OBS_MuN[, p], sdlog = OBS_SdN[,p])
+}
+```
+
+```{r}
+df_Eff_N_obs <- data.frame(
+  Type = "Data",
+  Stage = rep(c("Smolt", "1SW adults", "2SW adults"), each = 24),
+  Variable = rep(c("Visible", "Visible", "Visible"), each = 24),
+  Cohort = as.numeric(rep(1996:2019, times = 3)),
+  Q2.5 = as.vector(Eff_N_obs[,1]),
+  Q50 = as.vector(Eff_N_obs[,2]),
+  Q97.5 = as.vector(Eff_N_obs[,3])
+)
+```
+
+```{r}
+ggplot(data = df_Eff_N_obs, aes(x = Cohort)) +
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = "Data"), alpha = 0.2, linewidth = 0.5) +
+  geom_line(aes(y = Q50, color = "Data"), linewidth = 1) +
+  facet_grid(Stage~ ., scales = "free_y") +
+  labs(x="Années de cohortes", y="Taille d'écailles (mm)") +
+  scale_color_manual(values = c("Data" = "red")) +
+  scale_fill_manual(values = c("Data" = "red")) +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+
+### Comparison
+
+```{r}
+ggplot(data = df_Eff_N_est, aes(x = Cohort)) +
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = "Estimation"), alpha = 0.2, linewidth = 0.3) +
+  geom_errorbar(data = df_Eff_N_obs, aes(x = Cohort, ymin = Q2.5, ymax = Q97.5, group = Cohort, color = "Data"), width = 0.6, linewidth = 1) +
+  geom_point(data = df_Eff_N_obs, aes(x = Cohort, y = Q50, group = Cohort, color = "Data"), size = 2) +
+  geom_line(aes(y = Q50, color = "Estimation"), linewidth = 1.2) +
+  labs(x="Années de cohortes", y="Taille d'écailles (mm)") +
+  scale_color_manual(values = c("Estimation" = "black", "Data" = "red")) +
+  scale_fill_manual(values = c("Estimation" = "black")) +
+  facet_grid(Stage ~ ., scales = "free_y") +
+  guides(fill = "none", color = "none") +
+  theme_bw()
+```
+
+# Sexes
+
+## Introduction
+
+```{r}
+idxfemale <- grep("Psex_SR\\d+\\[\\d+, 1\\]", colnames(MCMC_matrix))
+MCMC_Sex_F <- MCMC_matrix[,idxfemale]
+
+num_iterations <- nrow(MCMC_Sex_F)
+num_params <- ncol(MCMC_Sex_F)
+
+quantiles <- c(0.025, 0.50, 0.975)
+num_quantiles <- length(quantiles)
+```
+
+## Fit
+
+### Estimations
+
+```{r}
+Sex_SR_est <- matrix(NA, nrow = num_params, ncol = num_quantiles)
+for (p in 1:num_params) {
+  Sex_SR_est[p, 1:num_quantiles] <- quantile(MCMC_Sex_F[1:num_iterations, p], probs = quantiles)
+}
+```
+
+```{r}
+df_Sex_SR_est <- data.frame(
+  Type = "Estimation",
+  Stage = rep(c("Smolt", "1SW adults", "2SW adults"), each = 24),
+  Variable = rep(c("Visible", "Visible", "Visible"), each = 24),
+  Cohort = as.numeric(rep(1996:2019, times = 3)),
+  Q2.5 = as.vector(Sex_SR_est[,1]),
+  Q50 = as.vector(Sex_SR_est[,2]),
+  Q97.5 = as.vector(Sex_SR_est[,3])
+)
+```
+
+```{r}
+ggplot(data = df_Sex_SR_est, aes(x = Cohort)) +
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = "Estimation"), alpha = 0.2, linewidth = 0.5) +
+  geom_line(aes(y = Q50, color = "Estimation"), linewidth = 1) +
+  facet_grid(Stage~ ., scales = "free_y") +
+  labs(x="Années de cohortes", y="Taille d'écailles (mm)") +
+  scale_color_manual(values = c("Estimation" = "black")) +
+  scale_fill_manual(values = c("Estimation" = "black")) +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+
+### Data
+
+```{r}
+Sex_SR3 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/sexes/Sex_SR3.csv"), row.names = 1)
+Sex_SR6 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/sexes/Sex_SR6.csv"), row.names = 1)
+Sex_SR9 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/sexes/Sex_SR9.csv"), row.names = 1)
+
+OBS_FemS <- t(matrix(c(Sex_SR3[, 1], Sex_SR6[, 1], Sex_SR9[, 1])))
+colnames(OBS_FemS) <- gsub("Psex", "FemS", colnames(MCMC_Sex_F))
+
+OBS_TotS <- t(matrix(c(Sex_SR3[, 3], Sex_SR6[, 3], Sex_SR9[, 3])))
+colnames(OBS_TotS) <- gsub("Psex", "TotS", colnames(MCMC_Sex_F))
+```
+
+```{r}
+Sex_SR_obs <- matrix(NA, nrow = num_params, ncol = num_quantiles)
+for (p in 1:num_params) {
+  Sex_SR_obs2[p, ] <- qbeta(p = quantiles, shape1 = (OBS_FemS[p] + 1), shape2 = ((OBS_TotS[p] - OBS_FemS[p]) + 1))
+}
+```
+
+```{r}
+df_Sex_SR_obs <- data.frame(
+  Type = "Data",
+  Stage = rep(c("Smolt", "1SW adults", "2SW adults"), each = 24),
+  Variable = rep(c("Visible", "Visible", "Visible"), each = 24),
+  Cohort = as.numeric(rep(1996:2019, times = 3)),
+  Q2.5 = as.vector(Sex_SR_obs2[,1]),
+  Q50 = as.vector(Sex_SR_obs2[,2]),
+  Q97.5 = as.vector(Sex_SR_obs2[,3])
+)
+```
+
+```{r}
+ggplot(data = df_Sex_SR_obs, aes(x = Cohort)) +
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = "Data"), alpha = 0.2, linewidth = 0.5) +
+  geom_line(aes(y = Q50, color = "Data"), linewidth = 1) +
+  facet_grid(Stage~ .) +
+  ylim(0,1) +
+  labs(x="Années de cohortes", y="Taille d'écailles (mm)") +
+  scale_color_manual(values = c("Data" = "red")) +
+  scale_fill_manual(values = c("Data" = "red")) +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+
+### Comparison
+
+```{r}
+ggplot(data = df_Sex_SR_est, aes(x = Cohort)) +
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = "Estimation"), alpha = 0.2, linewidth = 0.3) +
+  geom_errorbar(data = df_Sex_SR_obs, aes(x = Cohort, ymin = Q2.5, ymax = Q97.5, group = Cohort, color = "Data"), width = 0.6, linewidth = 1) +
+  geom_point(data = df_Sex_SR_obs, aes(x = Cohort, y = Q50, group = Cohort, color = "Data"), size = 2) +
+  geom_line(aes(y = Q50, color = "Estimation"), linewidth = 1.2) +
+  labs(x="Années de cohortes", y="Taille d'écailles (mm)") +
+  scale_color_manual(values = c("Estimation" = "black", "Data" = "red")) +
+  scale_fill_manual(values = c("Estimation" = "black")) +
+  facet_grid(Stage ~ ., scales = "free_y") +
+  guides(fill = "none", color = "none") +
+  theme_bw()
+```
