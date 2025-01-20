@@ -1,0 +1,239 @@
+---
+title: "Convergence Graphs"
+author: "Eliot Boulaire"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(root.dir = rstudioapi::getActiveProject(), echo = TRUE)
+rm(list = ls())
+
+pkginstall <- function(packages) {
+  for (pkg in packages) {
+    if (!require(pkg, character.only = TRUE)) {
+      message(paste("Installation du package manquant:", pkg))
+      install.packages(pkg, dependencies = TRUE)
+      library(pkg, character.only = TRUE)
+      message(paste(pkg, "chargé avec succès"))
+    } else {
+      message(paste("Le package", pkg, "est déjà installé."))
+      library(pkg, character.only = TRUE)
+      message(paste(pkg, "chargé avec succès"))
+    }
+  }
+}
+
+packages <- c("ggplot2", "ggmcmc", "coda")
+pkginstall(packages)
+
+HOME <- rstudioapi::getActiveProject()
+```
+
+# Introduction
+
+The purpose of this code is to run bayesian models with R using the nimble package (...).
+
+## Load mcmc
+
+(You have to change the path of all the registered and loading elements)
+
+```{r load}
+MCMC_samples <- readRDS(paste0(HOME, "/Project/saves/MCMC_base.rds"))
+varnames(MCMC_samples$samples)
+```
+
+## Type of writing
+
+```{r}
+## val_param <- paste0(c("parameter"), collapse = "|")
+## MCMC_param = MCMC_samples[,grep(paste0(val_param), varnames(MCMC_samples))]
+## varnames(MCMC_param)
+## S_param <- ggs(MCMC_param)
+```
+
+# General diagnostic
+
+```{r}
+# Logistics parameters
+val_logist <- paste0(c("^Alpha", "^Beta"), collapse = "|")
+MCMC_logist <- MCMC_samples$samples[, grep(val_logist, varnames(MCMC_samples$samples))]
+S_logist <- ggs(MCMC_logist)
+
+# Mu_scales parameters
+val_mu_scales <- c("Mu_L")
+MCMC_mu_scales <- MCMC_samples$samples[, grep(val_mu_scales, varnames(MCMC_samples$samples))]
+S_mu_scales <- ggs(MCMC_mu_scales)
+
+# Sd_scales parameters
+val_sd_scales <- c("Sd_L")
+MCMC_sd_scales <- MCMC_samples$samples[, grep(val_sd_scales, varnames(MCMC_samples$samples))]
+S_sd_scales <- ggs(MCMC_sd_scales)
+
+# Abundance parameters
+val_abundance <- c("N")
+MCMC_abundance <- MCMC_samples$samples[, grep(val_abundance, varnames(MCMC_samples$samples))]
+S_abundance <- ggs(MCMC_abundance)
+
+# Sex-ratio parameters
+val_sex <- c("SR")
+MCMC_sex <- MCMC_samples$samples[, grep(val_sex, varnames(MCMC_samples$samples))]
+S_sex <- ggs(MCMC_sex)
+```
+
+## Gelman-Rubin diagnosis
+
+```{r}
+# Logistics parameters
+GR_logist <- gelman.diag(MCMC_logist, confidence = 0.95, transform=TRUE, autoburnin=TRUE, multivariate = FALSE)
+GR_logist_non <- GR_logist$psrf[,1][GR_logist$psrf[,1] >= 1.1]
+GR_logist_non
+
+gelman_logist <- ggs_Rhat(S_logist) + 
+  ylab("Parameters") +
+  xlab("R_hat")
+gelman_logist
+
+# Mu_scales parameters
+GR_mu_scales <- gelman.diag(MCMC_mu_scales, confidence = 0.95, transform=TRUE, autoburnin=TRUE, multivariate = FALSE)
+GR_mu_scales_non <- GR_mu_scales$psrf[,1][GR_mu_scales$psrf[,1] >= 1.1]
+GR_mu_scales_non
+
+gelman_mu_scales <- ggs_Rhat(S_mu_scales) + 
+  ylab("Parameters") +
+  xlab("R_hat")
+gelman_mu_scales
+
+# Sd_scales parameters
+GR_sd_scales <- gelman.diag(MCMC_sd_scales, confidence = 0.95, transform=TRUE, autoburnin=TRUE, multivariate = FALSE)
+GR_sd_scales_non <- GR_sd_scales$psrf[,1][GR_sd_scales$psrf[,1] >= 1.1]
+GR_sd_scales_non
+
+gelman_sd_scales <- ggs_Rhat(S_sd_scales) + 
+  ylab("Parameters") +
+  xlab("R_hat")
+gelman_sd_scales
+
+# Abundance parameters
+GR_abundance <- gelman.diag(MCMC_abundance, confidence = 0.95, transform=TRUE, autoburnin=TRUE, multivariate = FALSE)
+GR_abundance_non <- GR_abundance$psrf[,1][GR_abundance$psrf[,1] >= 1.1]
+GR_abundance_non
+
+gelman_abundance <- ggs_Rhat(S_abundance) + 
+  ylab("Parameters") +
+  xlab("R_hat")
+gelman_abundance
+
+# Sex-rario parameters
+GR_sex <- gelman.diag(MCMC_sex, confidence = 0.95, transform=TRUE, autoburnin=TRUE, multivariate = FALSE)
+GR_sex_non <- GR_sex$psrf[,1][GR_sex$psrf[,1] >= 1.1]
+GR_sex_non
+
+gelman_sex <- ggs_Rhat(S_sex) + 
+  ylab("Parameters") +
+  xlab("R_hat")
+gelman_sex
+```
+
+## Geweke diagnosis
+
+```{r}
+# Logistics parameters
+GE_logist <- geweke.diag(MCMC_logist, frac1 = 0.1, frac2 = 0.5)
+GE_logist_Zscore <- c(GE_logist[[1]]$z,GE_logist[[2]]$z,GE_logist[[3]]$z)
+GE_logist_prc <- mean(GE_logist_Zscore >= -2 & GE_logist_Zscore <= 2) * 100
+GE_logist_prc
+
+geweke_logist <- ggs_geweke(S_logist) + 
+  ylab("Parameters") +
+  xlab("R_hat")
+geweke_logist
+
+# Mu_scales parameters
+GE_mu_scales <- geweke.diag(MCMC_mu_scales, frac1 = 0.1, frac2 = 0.5)
+GE_mu_scales_Zscore <- c(GE_mu_scales[[1]]$z,GE_mu_scales[[2]]$z,GE_mu_scales[[3]]$z)
+GE_mu_scales_prc <- mean(GE_mu_scales_Zscore >= -2 & GE_mu_scales_Zscore <= 2) * 100
+GE_mu_scales_prc
+
+geweke_mu_scales <- ggs_geweke(S_mu_scales) + 
+  ylab("Parameters") +
+  xlab("R_hat")
+geweke_mu_scales
+
+# Sd_scales parameters
+GE_sd_scales <- geweke.diag(MCMC_sd_scales, frac1 = 0.1, frac2 = 0.5)
+GE_sd_scales_Zscore <- c(GE_sd_scales[[1]]$z,GE_sd_scales[[2]]$z,GE_sd_scales[[3]]$z)
+GE_sd_scales_prc <- mean(GE_sd_scales_Zscore >= -2 & GE_sd_scales_Zscore <= 2) * 100
+GE_sd_scales_prc
+
+geweke_sd_scales <- ggs_geweke(S_sd_scales) + 
+  ylab("Parameters") +
+  xlab("R_hat")
+geweke_sd_scales
+
+# Abundance parameters
+GE_abundance <- geweke.diag(MCMC_abundance, frac1 = 0.1, frac2 = 0.5)
+GE_abundance_Zscore <- c(GE_abundance[[1]]$z,GE_abundance[[2]]$z,GE_abundance[[3]]$z)
+GE_abundance_prc <- mean(GE_abundance_Zscore >= -2 & GE_abundance_Zscore <= 2) * 100
+GE_abundance_prc
+
+geweke_abundance <- ggs_geweke(S_abundance) + 
+  ylab("Parameters") +
+  xlab("R_hat")
+geweke_abundance
+
+# Sex-rario parameters
+GE_sex <- geweke.diag(MCMC_sex, frac1 = 0.1, frac2 = 0.5)
+GE_sex_Zscore <- c(GE_sex[[1]]$z,GE_sex[[2]]$z,GE_sex[[3]]$z)
+GE_sex_prc <- mean(GE_sex_Zscore >= -2 & GE_sex_Zscore <= 2) * 100
+GE_sex_prc
+
+geweke_sex <- ggs_geweke(S_sex) + 
+  ylab("Parameters") +
+  xlab("R_hat")
+geweke_sex
+```
+
+## Effective size
+
+```{r}
+# Logistics parameters
+effsize_logist <- effectiveSize(MCMC_logist)
+effsize_logist_non <- effsize_logist[effsize_logist <= 1000]
+effsize_logist_non
+
+# Mu_scales parameters
+effsize_mu_scales <- effectiveSize(MCMC_mu_scales)
+effsize_mu_scales_non <- effsize_mu_scales[effsize_mu_scales <= 1000]
+effsize_mu_scales_non
+
+# Sd_scales parameters
+effsize_sd_scales <- effectiveSize(MCMC_sd_scales)
+effsize_sd_scales_non <- effsize_sd_scales[effsize_sd_scales <= 1000]
+effsize_sd_scales_non
+
+# Abundance parameters
+effsize_abundance <- effectiveSize(MCMC_abundance)
+effsize_abundance_non <- effsize_abundance[effsize_abundance <= 1000]
+effsize_abundance_non
+
+# Sex_ratio parameters
+effsize_sex <- effectiveSize(MCMC_sex)
+effsize_sex_non <- effsize_sex[effsize_sex <= 1000]
+effsize_sex_non
+```
+
+# Further investigation
+
+## Traceplots
+
+```{r}
+# Logist parameters
+ggs_traceplot(S_logist, original_burnin = FALSE)
+```

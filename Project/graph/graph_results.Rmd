@@ -1,0 +1,274 @@
+---
+title: "Results graphs"
+author: "Eliot Boulaire"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(root.dir = rstudioapi::getActiveProject(), echo = TRUE)
+rm(list = ls())
+
+pkginstall <- function(packages) {
+  for (pkg in packages) {
+    if (!require(pkg, character.only = TRUE)) {
+      message(paste("Installation du package manquant:", pkg))
+      install.packages(pkg, dependencies = TRUE)
+      library(pkg, character.only = TRUE)
+      message(paste(pkg, "chargé avec succès"))
+    } else {
+      message(paste("Le package", pkg, "est déjà installé."))
+      library(pkg, character.only = TRUE)
+      message(paste(pkg, "chargé avec succès"))
+    }
+  }
+}
+
+packages <- c("dplyr", "tidyr", "ggplot2", "mgcv", "patchwork")
+pkginstall(packages)
+
+HOME <- rstudioapi::getActiveProject()
+```
+
+# Introduction
+
+The purpose of this code is to run bayesian models with R using the nimble package (...).
+
+## Load mcmc
+
+(You have to change the path of all the registered and loading elements)
+
+```{r load}
+MCMC_samples <- readRDS(paste0(HOME, "/Project/saves/MCMC_base.rds"))
+varnames(MCMC_samples$samples)
+```
+
+## Create matrix
+
+```{r}
+MCMC_matrix <- as.matrix(MCMC_samples$samples)
+colnames(MCMC_matrix)
+```
+
+# Survival
+
+## Curve
+
+```{r}
+# Création d'un nouvel axe l2 = taille d'écaille2
+lmin <- 0.4
+lmax <- 1.9
+num_lseq <- 10000
+lseq <- seq(from = lmin, to = lmax, length.out = num_lseq) # Création de l'axe x
+
+# Création d'un nouvel axe q = quantiles
+quantiles <- c(0.025, 0.50, 0.975)
+num_quantiles <- length(quantiles)
+
+Scales_L3 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L3.csv"), row.names = 1)
+Mean_L3 <- mean(unlist(Scales_L3), na.rm = TRUE)
+```
+
+```{r}
+surv <- matrix(data = NA, nrow = num_lseq, ncol = num_quantiles)
+for (l in 1:num_lseq) {
+  surv_temp_log <- (MCMC_matrix[,"Alpha3"] + (MCMC_matrix[,"Beta3"] * (lseq[l] - Mean_L3)))
+  surv_temp <- (1 / (1 + exp(-surv_temp_log)))
+  surv[l, ] <- quantile(surv_temp, probs = quantiles)
+}
+```
+
+```{r}
+df_surv <- data.frame(
+  Parameters = "Surv",
+  Taillecailles = lseq,
+  Q2.5 = surv[,1],
+  Q50 = surv[,2],
+  Q97.5 = surv[,3]
+)
+
+G50_surv <- df_surv %>%
+  filter(abs(Q50 - 0.5) == min(abs(Q50 - 0.5)))
+```
+
+```{r}
+pSa <- ggplot(data = df_surv, aes(x = Taillecailles)) +
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5),  fill = "green",  color = "green", alpha = 0.2, linewidth = 0.5) +
+  geom_line(aes(y = Q50),  color = "darkgreen", linewidth = 1) +
+  geom_vline(data = G50_surv, aes(xintercept = Taillecailles),  color = "green", linewidth = 1, linetype = "dashed") + 
+  geom_label(data = G50_surv, aes(x = Taillecailles, y = 1, label = round(Taillecailles, 2)),  color = "green") +
+  labs(x="Taille d'écaille (mm)", y="Probabilité de survie") +
+  coord_cartesian(ylim = c(0, 1.1), xlim = c(0.25, 2.1)) +
+  scale_y_continuous(expand = c(0, 0), labels = scales::percent) +
+  scale_x_continuous(expand = c(0, 0)) +
+  theme_bw()
+pSa
+```
+
+## Data
+
+```{r}
+Scales_L3 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L3.csv"), row.names = 1)
+
+Scales_L3_obs <- unlist(na.omit(Scales_L3))
+df_Scales_L3 <- data.frame(
+  stage = "SM",
+  scales = Scales_L3_obs
+)
+
+Scales_L3_obs2 <- unlist(Scales_L3)
+df2_Scales_L3 <- data.frame(
+  stage = "SM",
+  scales = Scales_L3_obs2,
+  cohort = rep(as.character(c(1996:2019)), each = 33)
+)
+df2_Scales_L3 <- df2_Scales_L3 %>%
+  filter(!is.na(scales))
+```
+
+```{r}
+pSb1 <- ggplot(data = df_Scales_L3, aes(x = scales, y = stage)) +
+  geom_violin(color = "green", linewidth = 1) +
+  geom_boxplot(color = "black", linewidth = 0.5, width = 0.2)+
+  labs(x="Taille d'écailles (mm)", y="Structure
+d'écailles") +
+  coord_cartesian(xlim = c(0.25, 2.1)) +
+  scale_x_continuous(expand = c(0, 0)) +
+  theme_bw()
+pSb1
+
+
+labels <- levels(factor(df2_Scales_L3$cohort))
+labels[seq(2, length(labels), by = 2)] <- ""
+pSb2 <- ggplot(data = df2_Scales_L3, aes(x = scales, y = cohort)) +
+  geom_boxplot(aes(color = cohort)) +
+  labs(x = "Taille d'écailles (mm)", 
+       y = "Structure d'écailles") +
+  coord_cartesian(xlim = c(0.25, 2.1)) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_discrete(labels = labels) +
+  theme_bw() +
+  theme(legend.position = "none")
+pSb2
+```
+
+## Combined
+
+```{r}
+pSa/pSb1 + plot_layout(heights = c(5, 1))
+
+pSa/pSb2 + plot_layout(heights = c(4, 2))
+```
+
+# Maturation
+
+## Curve
+
+```{r}
+l2min <- 1.9
+l2max <- 3.9
+num_l2seq <- 10000
+l2seq <- seq(from = l2min, to = l2max, length.out = num_l2seq)
+
+quantiles <- c(0.025, 0.50, 0.975)
+num_quantiles <- length(quantiles)
+
+Scales_L42 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L42.csv"), row.names = 1)
+Mean_L42 <- mean(unlist(Scales_L42), na.rm = TRUE)
+```
+
+```{r}
+matur <- matrix(data = NA, nrow = num_l2seq, ncol = num_quantiles)
+for (l in 1:num_l2seq) {
+  matur_temp_log <- (MCMC_matrix[,"Alpha4"] + (MCMC_matrix[,"Beta4"] * (l2seq[l] - Mean_L42)))
+  matur_temp <- (1 / (1 + exp(-matur_temp_log)))
+  matur[l, ] <- quantile(matur_temp, probs = quantiles)
+}
+```
+
+```{r}
+df_matur <- data.frame(
+  Parameters = "Matur",
+  Taillecailles = l2seq,
+  Q2.5 = matur[,1],
+  Q50 = matur[,2],
+  Q97.5 = matur[,3]
+)
+
+G50_matur <- df_matur %>%
+  filter(abs(Q50 - 0.5) == min(abs(Q50 - 0.5)))
+```
+
+```{r}
+pMa <- ggplot(data = df_matur, aes(x = Taillecailles)) +
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5),  fill = "red",  color = "red", alpha = 0.2, linewidth = 0.5) +
+  geom_line(aes(y = Q50),  color = "darkred", linewidth = 1) +
+  geom_vline(data = G50_matur, aes(xintercept = Taillecailles),  color = "red", linewidth = 1, linetype = "dashed") + 
+  geom_label(data = G50_matur, aes(x = Taillecailles, y = 1, label = round(Taillecailles, 2)),  color = "red") +
+  labs(x="Taille d'écailles (mm)", y="Probabilité de maturer en 1HM") +
+  coord_cartesian(ylim = c(0, 1.1), xlim = c(1.75, 4.1)) +
+  scale_y_continuous(expand = c(0, 0), labels = scales::percent) +
+  scale_x_continuous(expand = c(0, 0)) +
+  theme_bw()
+pMa
+```
+
+## Data
+
+```{r}
+Scales_L42 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L42.csv"), row.names = 1)
+
+Scales_L42_obs <- unlist(na.omit(Scales_L42))
+df_Scales_L42 <- data.frame(
+  stage = "PSM",
+  scales = Scales_L42_obs
+)
+
+Scales_L42_obs2 <- unlist(Scales_L42)
+df2_Scales_L42 <- data.frame(
+  stage = "PSM",
+  scales = Scales_L42_obs2,
+  cohort = rep(as.character(c(1996:2019)), each = 61)
+)
+df2_Scales_L42 <- df2_Scales_L42 %>%
+  filter(!is.na(scales))
+```
+
+```{r}
+pMb1 <- ggplot(data = df_Scales_L42, aes(x = scales, y = stage)) +
+  geom_violin(color = "red", linewidth = 1) +
+  geom_boxplot(color = "black", linewidth = 0.5, width = 0.2)+
+  labs(x="Taille d'écailles (mm)", y="Structure
+d'écailles") +
+  coord_cartesian(xlim = c(1.75, 4.1)) +
+  scale_x_continuous(expand = c(0, 0)) +
+  theme_bw()
+pMb1
+
+labels <- levels(factor(df2_Scales_L42$cohort))
+labels[seq(2, length(labels), by = 2)] <- ""
+pMb2 <- ggplot(data = df2_Scales_L3, aes(x = scales, y = cohort)) +
+  geom_boxplot(aes(color = cohort)) +
+  labs(x = "Taille d'écailles (mm)", 
+       y = "Structure d'écailles") +
+  coord_cartesian(xlim = c(0.25, 2.1)) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_discrete(labels = labels) +
+  theme_bw() +
+  theme(legend.position = "none")
+pMb2
+```
+
+## Combined
+
+```{r}
+pMa/pMb1 + plot_layout(heights = c(5, 1))
+
+pMa/pMb2 + plot_layout(heights = c(4, 2))
+```
