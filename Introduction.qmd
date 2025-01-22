@@ -30,7 +30,7 @@ format:
         href: https://github.com/eliotboulaire/MicroProject-2025_MODESTA
       - text: Model
         icon: file-code
-        href: Project/model/SALMSIZE-MAR.R
+        href: Project/models/SALMSIZE-MARSIMqu.R
     header-includes: |
       <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
         <img src="Introduction_files/images/iara-logo.png" alt="IARA Logo" width="300"/>
