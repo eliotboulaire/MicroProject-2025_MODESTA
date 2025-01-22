@@ -67,7 +67,7 @@ monitor <- c(
 ## Load the model
 
 ```{r model}
-source(paste0(HOME, "/Project/model/SALMSIZE-MARSIM.R"))
+source(paste0(HOME, "/Project/models/SALMSIZE-MARSIM.R"))
 ```
 
 ## Load the NimbleFunctions used inside the model
