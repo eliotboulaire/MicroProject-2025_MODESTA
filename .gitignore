@@ -61,4 +61,4 @@ Project/results/*
 !Project/results/README.md
 
 # ZIP folders
-.zip
+*.zip
