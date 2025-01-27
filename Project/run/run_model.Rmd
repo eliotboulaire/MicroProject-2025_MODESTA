@@ -59,7 +59,7 @@ monitor <- c(
   "Mu_L3", "Mu_L41", "Mu_L42", "Mu_L5", "Mu_L8", "Mu_L6", "Mu_L9",
   "Sd_L3", "Sd_L41", "Sd_L42", "Sd_L5", "Sd_L8", "Sd_L6", "Sd_L9",
   "Mu_N3", "Mu_N6", "Mu_N9",
-  "Psex_SR3", "Psex_SR6", "Psex_SR9",
+  "Psex_SR3", "Pfem_SR3", "Psex_SR6", "Psex_SR9", 
   "Alpha3", "Beta3", "Alpha4", "Beta4"
 )
 ```
@@ -103,7 +103,8 @@ model_nimble <- nimbleModel(
   inits = inits_1chain
 )
 # model_nimble$initializeInfo()
-# model_nimble$calculate()
+# NodesToSim <- model_nimble$getDependencies(c("Mu_N3", "Pfem_SR3", "Mu_L3", "Sd_L3", "Mu_L42", "Sd_L42", "Mu_L6", "Sd_L6", "Mu_L9", "Sd_L9", "Alpha3", "Beta3", "Alpha4", "Beta4"), self = F, downstream = T)
+# model_nimble$simulate(nodes = NodesToSim)
 ```
 
 ## Step 2 : Compile the model
@@ -125,7 +126,8 @@ model_conf <- configureMCMC(
 )
 
 model_MCMC <- buildMCMC(model_conf)
-# model_MCMC$run(niter = 0)
+# model_MCMC$run(niter = 0, time = TRUE)
+# model_MCMC$getTimes()
 ```
 
 ## Step 4 : Compile the existing model with the associated MCMC sampler
@@ -160,5 +162,5 @@ MCMC_samples <- runMCMC(
 is(MCMC_samples$samples)
 varnames(MCMC_samples$samples)
 
-saveRDS(MCMC_samples, file = paste0(HOME, "/Project/saves/MCMC_base.rds")) # Change the name of the file as you want
+saveRDS(MCMC_samples, file = paste0(HOME, "/Project/saves/MCMC_test.rds")) # Change the name of the file as you want
 ```
