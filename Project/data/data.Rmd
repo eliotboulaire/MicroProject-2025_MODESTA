@@ -1,0 +1,283 @@
+---
+title: "Data"
+author: "Eliot Boulaire"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+  pdf_document:
+    toc: true
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(root.dir = rstudioapi::getActiveProject(), echo = TRUE)
+rm(list = ls())
+
+pkginstall <- function(packages) {
+  for (pkg in packages) {
+    if (!require(pkg, character.only = TRUE)) {
+      message(paste("Installation du package manquant:", pkg))
+      install.packages(pkg, dependencies = TRUE)
+      library(pkg, character.only = TRUE)
+      message(paste(pkg, "chargé avec succès"))
+    } else {
+      message(paste("Le package", pkg, "est déjà installé."))
+      library(pkg, character.only = TRUE)
+      message(paste(pkg, "chargé avec succès"))
+    }
+  }
+}
+
+packages <- c("dplyr")
+pkginstall(packages)
+
+HOME <- rstudioapi::getActiveProject()
+```
+
+# Data
+
+## Load
+
+### Scales
+
+#### Smolt
+
+```{r}
+Scales_L3 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L3.csv"), row.names = 1)
+Scales_L3 <- as.matrix(Scales_L3)
+```
+
+#### Post-smolt
+
+```{r}
+Scales_L41 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L41.csv"), row.names = 1)
+Scales_L41 <- as.matrix(Scales_L41)
+
+Scales_L42 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L42.csv"), row.names = 1)
+Scales_L42 <- as.matrix(Scales_L42)
+
+Scales_L5 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L5.csv"), row.names = 1)
+Scales_L5 <- as.matrix(Scales_L5)
+
+Scales_L8 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L8.csv"), row.names = 1)
+Scales_L8 <- as.matrix(Scales_L8)
+```
+
+#### Adult return
+
+```{r}
+Scales_L6 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L6.csv"), row.names = 1)
+Scales_L6 <- as.matrix(Scales_L6)
+
+Scales_L9 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/scales/Scales_L9.csv"), row.names = 1)
+Scales_L9 <- as.matrix(Scales_L9)
+```
+
+### Sexes
+
+#### Smolt
+
+```{r}
+Sex_SR3 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/sexes/Sex_SR3.csv"), row.names = 1)
+Sex_SR3 <- Sex_SR3 %>%
+  mutate(females = as.numeric(females),
+         males = as.numeric(males),
+         total = as.numeric(total)) %>%
+  as.matrix()
+```
+
+#### 1SW return
+
+```{r}
+Sex_SR6 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/sexes/Sex_SR6.csv"), row.names = 1)
+Sex_SR6 <- Sex_SR6 %>%
+  mutate(females = as.numeric(females),
+         males = as.numeric(males),
+         total = as.numeric(total)) %>%
+  as.matrix()
+```
+
+#### 2SW return
+
+```{r}
+Sex_SR9 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/sexes/Sex_SR9.csv"), row.names = 1)
+Sex_SR9 <- Sex_SR9 %>%
+  mutate(females = as.numeric(females),
+         males = as.numeric(males),
+         total = as.numeric(total)) %>%
+  as.matrix()
+```
+
+### Abundances
+
+#### Smolt
+
+```{r}
+Eff_N3 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/abundances/Eff_N3.csv"), row.names = 1)
+Eff_N3 <- Eff_N3 %>%
+  mutate(log_sd = sqrt(log(1+((sd^2)/(mean^2))))) %>%
+  as.matrix()
+```
+
+#### 1SW return
+
+```{r}
+Eff_N6 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/abundances/Eff_N6.csv"), row.names = 1)
+Eff_N6 <- Eff_N6 %>%
+  mutate(log_sd = sqrt(log(1+((sd^2)/(mean^2))))) %>%
+  as.matrix()
+```
+
+#### 2SW return
+
+```{r}
+Eff_N9 <- read.csv2(file = paste0(HOME, "/Project/data/rawdata/abundances/Eff_N9.csv"), row.names = 1)
+Eff_N9 <- Eff_N9 %>%
+  mutate(log_sd = sqrt(log(1+((sd^2)/(mean^2))))) %>%
+  as.matrix()
+```
+
+## Save
+
+```{r}
+data <- list(Scales_L3 = Scales_L3, Eff_N3 = Eff_N3[, 1], Nsex_SR3 = Sex_SR3[, 1:2],
+             Scales_L41 = Scales_L41,
+             Scales_L42 = Scales_L42,
+             Scales_L5 = Scales_L5,
+             Scales_L8 = Scales_L8,
+             Scales_L6 = Scales_L6, Eff_N6 = Eff_N6[, 1], Nsex_SR6 = Sex_SR6[, 1:2],
+             Scales_L9 = Scales_L9, Eff_N9 = Eff_N9[, 1], Nsex_SR9 = Sex_SR9[, 1:2])
+saveRDS(data, file = paste0(HOME, "/Project/data/realdata/data.rds"))
+```
+
+# Constants
+
+## Generate
+
+```{r}
+source(paste0(HOME, "/Project/functions/f_round.R"))
+
+L3 <- as.numeric(apply(Scales_L3, 2, function(x) sum(!is.na(x))))
+
+Min_L3 <- f_round(min(Scales_L3, na.rm = TRUE), digit = 1, method = 1)
+Max_L3 <- f_round(max(Scales_L3, na.rm = TRUE), digit = 1, method = 2)
+Mean_L3 <- round(mean(Scales_L3, na.rm = TRUE), digits = 3)
+# table_surv <- data.frame(
+#   scales = c(0.4, 1.05, 1.9),
+#   surv = c(0.04, 0.11, 0.3)
+# )
+# fit <- lm(formula = surv~scales, data = table_surv)
+# summary(fit)
+
+L41 <- as.numeric(apply(Scales_L41, 2, function(x) sum(!is.na(x))))
+
+L42 <- as.numeric(apply(Scales_L42, 2, function(x) sum(!is.na(x))))
+Min_L42 <- f_round(min(Scales_L42, na.rm = TRUE), digit = 1, method = 1)
+Max_L42 <- f_round(max(Scales_L42, na.rm = TRUE), digit = 1, method = 2)
+Mean_L42 <- round(mean(Scales_L42, na.rm = TRUE), digits = 3)
+# table_mat <- data.frame(
+#   scales = c(1.7, 2.76, 3.9),
+#   mat = c(0.6, 0.8, 0.9)
+# )
+# fit2 <- lm(formula = mat~scales, data = table_mat)
+# summary(fit2)
+
+L5 <- as.numeric(apply(Scales_L5, 2, function(x) sum(!is.na(x))))
+
+L8 <- as.numeric(apply(Scales_L8, 2, function(x) sum(!is.na(x))))
+
+L6 <- as.numeric(apply(Scales_L6, 2, function(x) sum(!is.na(x))))
+Min_L6 <- f_round(min(Scales_L6, na.rm = TRUE), digit = 1, method = 1)
+Max_L6 <- f_round(max(Scales_L6, na.rm = TRUE), digit = 1, method = 2)
+
+L9 <- as.numeric(apply(Scales_L9, 2, function(x) sum(!is.na(x))))
+Min_L9 <- f_round(min(Scales_L9, na.rm = TRUE), digit = 1, method = 1)
+Max_L9 <- f_round(max(Scales_L9, na.rm = TRUE), digit = 1, method = 2)
+```
+
+## Save
+
+```{r}
+const <- list(Log_Sd_N3 = Eff_N3[, 3], Tot_SR3 = Sex_SR3[, 3],
+              Log_Sd_N6 = Eff_N6[, 3], Tot_SR6 = Sex_SR6[, 3],
+              Log_Sd_N9 = Eff_N9[, 3], Tot_SR9 = Sex_SR9[, 3],
+              L3 = L3, L41 = L41, L42 = L42, L5 = L5, L8 = L8, L6 = L6, L9 = L9, LC = 50, C = nrow(Eff_N3), S = 2,
+              Min_Theta3 = (0/100), Max_Theta3 = (100/100),
+              Theta5 = exp(-0.03*9), Theta8 = exp(-0.03*17),
+              Min_L3 = Min_L3, Max_L3 = Max_L3, Mean_L3 = Mean_L3,
+              Min_L42 = Min_L42, Max_L42 = Max_L42, Mean_L42 = Mean_L42,
+              Min_L6 = Min_L6, Max_L6 = Max_L6,
+              Min_L9 = Min_L9, Max_L9 = Max_L9)
+saveRDS(const, file = paste0(HOME, "/Project/data/realdata/const.rds"))
+```
+
+# Inits
+
+## Function
+
+```{r}
+generate_init <- function() {
+  Mu_N3 <- rep(x = 10000, times = 24)
+  Mu_L3 <- rep(x = 1, times = 24)
+  Sd_L3 <- rep(x = 0.2, times = 24)
+  Pfem_SR3 <- rep(x = 0.5, times = 24)
+  
+  Beta3 <- rep(x = 0.2, times = 1)
+  Alpha3 <- rep(x = -0.05, times = 1)
+  
+  Mu_L42 <- rep(x = 2.7, times = 24)
+  Sd_L42 <- rep(x = 0.3, times = 24)
+  
+  Beta4 <- rep(x = 0.2, times = 1)
+  Alpha4 <- rep(x = 0.3, times = 1)
+  
+  Mu_L6 <- rep(x = 4.1, times = 24)
+  Sd_L6 <- rep(x = 0.35, times = 24)
+  
+  Mu_L9 <- rep(x = 4.7, times = 24)
+  Sd_L9 <- rep(x = 0.4, times = 24)
+  
+  return(list(Mu_N3 = Mu_N3,
+              Pfem_SR3 = Pfem_SR3,
+              Mu_L3 = Mu_L3, Mu_L42 = Mu_L42, Mu_L6 = Mu_L6, Mu_L9 = Mu_L9,
+              Sd_L3 = Sd_L3,  Sd_L42 = Sd_L42, Sd_L6 = Sd_L6, Sd_L9 = Sd_L9,
+              Beta3 = Beta3, Alpha3 = Alpha3, Beta4 = Beta4, Alpha4 = Alpha4))
+}
+```
+
+## Generate
+
+```{r}
+set.seed(111)
+inits_chain1 <- generate_init()
+set.seed(222)
+inits_chain2 <- generate_init()
+set.seed(333)
+inits_chain3 <- generate_init()
+```
+
+## Save
+
+```{r}
+inits_1chain <- inits_chain1
+inits_3chains <- list(inits_chain1, inits_chain2, inits_chain3)
+
+saveRDS(inits_1chain, file = paste0(HOME, "/Project/data/realdata/inits_1chain.rds"))
+saveRDS(inits_3chains, file = paste0(HOME, "/Project/data/realdata/inits_3chains.rds"))
+
+# inits_3chains <- readRDS(paste0(HOME,"/Project/data/realdata/inits_3chains.rds"))
+# extract <- function(chain) {
+#   lapply(chain, function(variable, element = 21) {
+#     if (is.numeric(variable) && length(variable) >= 24) {
+#       variable[element]
+#     } else {
+#       NA
+#     }
+#   })
+# }
+# results_list <- lapply(inits_3chains, extract)
+# results_df <- as.data.frame(do.call(cbind, results_list))
+# colnames(results_df) <- paste0("Chain_", seq_along(inits_3chains))
+```

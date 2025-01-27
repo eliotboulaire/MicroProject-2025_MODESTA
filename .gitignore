@@ -49,8 +49,8 @@ po/*~
 rsconnect/
 
 # Raw data
-Project/data/*
-!Project/data/README.md
+Project/data/rawdata/*
+Project/data/realdata/*
 
 # Saved data
 Project/saves/*
